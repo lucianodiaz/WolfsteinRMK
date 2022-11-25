@@ -12,8 +12,8 @@ public:
 
 	virtual void onDeactivate() {};
 
-	virtual void processInput() {};
 
+	virtual void processInput() {};
 	virtual void update(sf::Time deltaTime) {};
 	virtual void draw(Window& window) {};
 };
