@@ -15,8 +15,8 @@ void Widget::setPosition(const sf::Vector2f& pos)
 
 void Widget::setPosition(float x, float y)
 {
-    _position.x = x;
-    _position.y = y;
+    _position.x = x + (_parent ? _parent->getPosition().x : 0);
+    _position.y = y + (_parent ? _parent->getPosition().y : 0);
 }
 
 const sf::Vector2f& Widget::getPosition() const

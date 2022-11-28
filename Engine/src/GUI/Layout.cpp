@@ -2,6 +2,7 @@
 
 Layout::Layout(Widget* parent): Widget(parent), _space(5)
 {
+   
 }
 
 Layout::~Layout()

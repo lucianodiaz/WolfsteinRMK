@@ -27,5 +27,5 @@ protected:
 
 	Widget* _parent;
 
-	sf::Vector2f _position;
+	sf::Vector2f _position{};
 };

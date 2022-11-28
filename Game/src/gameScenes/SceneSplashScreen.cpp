@@ -8,17 +8,7 @@ SceneSplashScreen::SceneSplashScreen(SceneStateMachine& ssm, Window& window) :
 }
 
 void SceneSplashScreen::onCreate()
-{
-	sf::Texture& texture = Configuration::textures.get(Configuration::Textures::TittleScreenImage);
-	_splashSprite.setTexture(texture);
-	sf::FloatRect spriteSize = _splashSprite.getLocalBounds();
-	_splashSprite.setOrigin(spriteSize.width *0.5f, spriteSize.height * 0.5f);
-	_splashSprite.setScale(0.6, 0.6);
-	_splashSprite.setPosition(_window.getWindowCentrePos().x, _window.getWindowCentrePos().y);
-	
-	Configuration::musics.get(Configuration::Music::TittleScreen).setLoop(true);
-	Configuration::musics.get(Configuration::Music::TittleScreen).play();
-
+{	
 }
 
 void SceneSplashScreen::onDestroy()
@@ -39,19 +29,21 @@ void SceneSplashScreen::processInput()
 				_skip = true;
 			}
 		}
-		/*else if (evt.type == sf::Event::MouseButtonPressed)
-		{
-			if (evt.key.code == sf::Mouse::Left)
-			{
-				_skip = true;
-			}
-		}*/
 	}
 }
 
 void SceneSplashScreen::onActivate()
 {
 	_currentSeconds = 0.f;
+	sf::Texture& texture = Configuration::textures.get(Configuration::Textures::TittleScreenImage);
+	_splashSprite.setTexture(texture);
+	sf::FloatRect spriteSize = _splashSprite.getLocalBounds();
+	_splashSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
+	_splashSprite.setScale(0.6, 0.6);
+	_splashSprite.setPosition(_window.getWindowCentrePos().x, _window.getWindowCentrePos().y);
+
+	Configuration::musics.get(Configuration::Music::TittleScreen).setLoop(true);
+	Configuration::musics.get(Configuration::Music::TittleScreen).play();
 }
 
 void SceneSplashScreen::onDeactivate()

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Widget.h"
 class Layout :
-    protected Widget
+    public Widget
 {
 public:
     Layout(const Layout&) = delete;

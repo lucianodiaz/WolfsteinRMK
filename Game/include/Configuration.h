@@ -4,6 +4,8 @@
 #include "ResourceManager.h"
 #include "Input/ActionMap.h"
 
+class Player;
+
 class Configuration
 {
 public:
@@ -31,17 +33,18 @@ public:
 
 	enum Textures : int
 	{
-		Player,
+		PlayerTexture,
 		WeakEnemy,
 		Walls,
 		TittleScreenImage,
-		MenuImage
+		MenuImage,		
 	};
 	static ResourceManager<sf::Texture> textures;
 
 	enum Images : int
 	{
-		icon
+		icon,
+		TestMap
 	};
 	static ResourceManager<sf::Image> images;
 	enum Music : int
@@ -55,7 +58,16 @@ public:
 
 	static void initialize();
 
+	static Player* player;
+	
+	static int lives;
+
+	static void draw(sf::RenderTarget& target);
+
 private:
+
+	static int _score;
+
 	static void initTextures();
 	static void initMusics();
 	static void initFonts();

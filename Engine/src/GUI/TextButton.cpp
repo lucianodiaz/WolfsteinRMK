@@ -3,8 +3,9 @@
 TextButton::TextButton(const std::string& text, Widget* parent) : Button(parent), _label(text,this)
 {
 	setFillColor(sf::Color(86, 20, 19));
-	setOutlineThickness(5);
+	setOutlineThickness(2);
 	setOutlineColor(sf::Color(146, 20, 19));
+
 }
 
 TextButton::~TextButton()
@@ -62,8 +63,13 @@ void TextButton::updateShape()
 	sf::Vector2f labelSize = _label.getSize();
 	unsigned int charSize = _label.getCharacterSize();
 
-	_shape.setSize(sf::Vector2f(charSize * 2 + labelSize.x, charSize * 2 + labelSize.y));
-	_label.setPosition(charSize, charSize);
+	//here I put a static value to size of rectangle to make a justify text to left
+	//but here  you can make a rectagle that adjust to size of label
+	//labelSize.x+ charSize
+	_shape.setSize(sf::Vector2f(200, charSize + labelSize.y));
+	
+	//and here same I put 0 to justify to left
+ 	_label.setPosition(0, charSize/2);
 
 	Widget::updateShape();
 }

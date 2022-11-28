@@ -8,19 +8,34 @@ ResourceManager<sf::Image, int>Configuration::images;
 ActionMap<int> Configuration::guiInputs;
 ActionMap<int> Configuration::playerInputs;
 
+
+int Configuration::_score;
+int Configuration::lives;
+
+Player* Configuration::player = nullptr;
+
 void Configuration::initialize()
 {
 	initFonts();
 	initMusics();
 	initTextures();
+	initPlayerInputs();
 	initGuiInputs();
+}
+
+void Configuration::draw(sf::RenderTarget& target)
+{
 }
 
 void Configuration::initTextures()
 {
+	textures.load(Textures::PlayerTexture, "assets/player/player.png");
 	textures.load(Textures::TittleScreenImage, "assets/images/tittleScreen.jpg");
 	textures.load(Textures::MenuImage, "assets/images/menu.png");
+	textures.load(Textures::Walls, "assets/maps/walls.png");
+
 	images.load(Images::icon, "assets/images/icon/icon.png");
+	images.load(Images::TestMap, "assets/maps/test.png");
 }
 
 void Configuration::initMusics()
@@ -45,8 +60,8 @@ void Configuration::initGuiInputs()
 
 void Configuration::initPlayerInputs()
 {
-	playerInputs.map(PlayerInputs::Up, Action(sf::Keyboard::W, Action::Type::Pressed));
-	playerInputs.map(PlayerInputs::Down, Action(sf::Keyboard::S, Action::Type::Pressed));
-	playerInputs.map(PlayerInputs::Left, Action(sf::Keyboard::A, Action::Type::Pressed));
-	playerInputs.map(PlayerInputs::Right, Action(sf::Keyboard::D, Action::Type::Pressed));
+	playerInputs.map(PlayerInputs::Up, Action(sf::Keyboard::W));
+	playerInputs.map(PlayerInputs::Down, Action(sf::Keyboard::S));
+	playerInputs.map(PlayerInputs::Left, Action(sf::Keyboard::A));
+	playerInputs.map(PlayerInputs::Right, Action(sf::Keyboard::D));
 }

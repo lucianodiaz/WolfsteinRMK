@@ -4,7 +4,7 @@
 Label::Label(const std::string& text, Widget* parent) : Widget(parent)
 {
     _text.setFont(Configuration::fonts.get(Configuration::Fonts::GUI));
-
+    
     setText(text);
     setTextColor(sf::Color(180, 93, 23));
 }
@@ -16,6 +16,7 @@ Label::~Label()
 void Label::setText(const std::string& text)
 {
     _text.setString(text);
+
     updateShape();
 }
 

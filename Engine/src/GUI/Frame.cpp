@@ -1,7 +1,8 @@
 #include "GUI/Frame.h"
 #include "Configuration.h"
 
-Frame::Frame(sf::RenderWindow& window) : Container(nullptr), ActionTarget(Configuration::guiInputs), _window(window)
+Frame::Frame(sf::RenderWindow& window) : Container(nullptr),
+ActionTarget(Configuration::guiInputs), _window(window)
 {
 }
 
@@ -46,7 +47,7 @@ sf::Vector2f Frame::getSize()const
 bool Frame::processEvent(const sf::Event& event, const sf::Vector2f& parent_pos)
 {
     bool res = ActionTarget::processEvent(event);
-    if (not res)
+    if (!res)
         res = Container::processEvent(event, parent_pos);
     return res;
 }

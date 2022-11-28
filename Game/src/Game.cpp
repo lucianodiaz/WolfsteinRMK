@@ -3,23 +3,30 @@
 #include "Window.h"
 #include "gameScenes/SceneMainMenu.h"
 #include "gameScenes/SceneSplashScreen.h"
+#include "gameScenes/SceneGame.h"
 
 Game::Game(int x, int y) : _window(std::make_unique<Window>(x,y,"Wolfenstein3d RMK")),
 							_world(x,y)
 {
+	_window->getRenderWindow().setIcon(Configuration::images.get(Configuration::Images::icon).getSize().x,
+		Configuration::images.get(Configuration::Images::icon).getSize().y, Configuration::images.get(Configuration::Images::icon).getPixelsPtr());
+
 	std::shared_ptr<SceneSplashScreen> splashScreen = std::make_shared<SceneSplashScreen>(sceneStateMachine, *_window);
 
 	std::shared_ptr<SceneMainMenu> menuScene = std::make_shared<SceneMainMenu>(sceneStateMachine, *_window);
 
+	std::shared_ptr<SceneGame> gameScene = std::make_shared<SceneGame>(sceneStateMachine, *_window,_world );
+
 	unsigned int splashScreenID = sceneStateMachine.add(splashScreen);
 	unsigned int menuSceneID = sceneStateMachine.add(menuScene);
+	unsigned int gameSceneID = sceneStateMachine.add(gameScene);
 
 	splashScreen->setSwitchToScene(menuSceneID);
+	menuScene->setSwitchToScene(gameSceneID);
+	gameScene->setSwitchToScene(menuSceneID);
+	sceneStateMachine.switchTo(gameSceneID);
 
-	sceneStateMachine.switchTo(splashScreenID);
-
-	_window->getRenderWindow().setIcon(Configuration::images.get(Configuration::Images::icon).getSize().x,
-		Configuration::images.get(Configuration::Images::icon).getSize().y, Configuration::images.get(Configuration::Images::icon).getPixelsPtr());
+	
 }
 
 Game::~Game()
@@ -66,17 +73,10 @@ void Game::processEvents()
 {
 	sf::Event evt;
 	sceneStateMachine.processInput();
-	/*while (_window->pollEvent(evt))
+	while (_window->pollEvent(evt))
 	{
 		if (evt.type == sf::Event::Closed)
 			_window->close();
-		else if (evt.type == sf::Event::KeyPressed)
-		{
-			if (evt.key.code == sf::Keyboard::Escape)
-			{
-				_window->close();
-			}
-		}
-	}*/
+	}
 
 }

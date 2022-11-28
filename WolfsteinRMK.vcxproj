@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Collision.cpp" />
     <ClCompile Include="Engine\src\Scene\SceneStateMachine.cpp" />
     <ClCompile Include="Engine\src\GUI\Container.cpp" />
     <ClCompile Include="Engine\src\GUI\Button.cpp" />
@@ -169,8 +170,11 @@
     <ClCompile Include="Game\src\gameScenes\SceneSplashScreen.cpp" />
     <ClCompile Include="Game\src\gameScenes\SceneMainMenu.cpp" />
     <ClCompile Include="Game\src\gameScenes\SceneGame.cpp" />
+    <ClCompile Include="Game\src\Player\Player.cpp" />
+    <ClCompile Include="Game\src\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Collision.h" />
     <ClInclude Include="Engine\include\GUI\Container.h" />
     <ClInclude Include="Engine\include\GUI\Button.h" />
     <ClInclude Include="Engine\include\Entity.h" />
@@ -194,6 +198,9 @@
     <ClInclude Include="Game\include\gameScenes\SceneSplashScreen.h" />
     <ClInclude Include="Game\include\gameScenes\SceneMainMenu.h" />
     <ClInclude Include="Game\include\gameScenes\SceneGame.h" />
+    <ClInclude Include="Game\include\Global.h" />
+    <ClInclude Include="Game\include\Player\Player.h" />
+    <ClInclude Include="Game\include\Map.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\Arcade.ttf" />

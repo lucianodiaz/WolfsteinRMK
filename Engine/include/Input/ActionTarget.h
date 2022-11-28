@@ -31,12 +31,12 @@ private:
 };
 
 template<typename T>
-inline ActionTarget<T>::ActionTarget(const ActionMap<T>& map) : _actionMap(map)
+ActionTarget<T>::ActionTarget(const ActionMap<T>& map) : _actionMap(map)
 {
 }
 
 template<typename T>
-inline bool ActionTarget<T>::processEvent(const sf::Event& event) const
+bool ActionTarget<T>::processEvent(const sf::Event& event)const
 {
     bool res = false;
     for (auto& pair : _eventsPoll)
@@ -52,7 +52,7 @@ inline bool ActionTarget<T>::processEvent(const sf::Event& event) const
 }
 
 template<typename T>
-inline void ActionTarget<T>::processEvents() const
+void ActionTarget<T>::processEvents()const
 {
     for (auto& pair : _eventsRealTime)
     {
@@ -63,7 +63,7 @@ inline void ActionTarget<T>::processEvents() const
 }
 
 template<typename T>
-inline void ActionTarget<T>::bind(const T& key, const FuncType& callback)
+void ActionTarget<T>::bind(const T& key, const FuncType& callback)
 {
     const Action& action = _actionMap.get(key);
     if (action._type & Action::Type::RealTime)
@@ -73,7 +73,7 @@ inline void ActionTarget<T>::bind(const T& key, const FuncType& callback)
 }
 
 template<typename T>
-inline void ActionTarget<T>::unbind(const T& key)
+void ActionTarget<T>::unbind(const T& key)
 {
     auto remove_func = [&key](const std::pair<T, FuncType>& pair) -> bool
     {

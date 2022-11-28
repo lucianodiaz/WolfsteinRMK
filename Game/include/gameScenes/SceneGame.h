@@ -4,12 +4,13 @@
 #include <Scene/SceneStateMachine.h>
 
 class World;
+
 class SceneGame :
     public Scene , private sf::NonCopyable
 {
 public:
     
-    SceneGame(World& world,Window& window, SceneStateMachine& ssm);
+    SceneGame(SceneStateMachine& ssm,Window& window, World& world);
 
     void onCreate() override;
     void onDestroy() override;
@@ -26,6 +27,6 @@ private:
     unsigned int _switchToState;
     World& _world;
     Window& _window;
-    SceneStateMachine _sceneStateMachine;
+    SceneStateMachine& _sceneStateMachine;
 };
 

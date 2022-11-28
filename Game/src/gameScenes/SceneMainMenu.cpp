@@ -8,13 +8,7 @@ SceneMainMenu::SceneMainMenu(SceneStateMachine& ssm, Window& window) :
 
 void SceneMainMenu::onCreate()
 {
-	sf::Texture& texture = Configuration::textures.get(Configuration::Textures::MenuImage);
-	_menuSprite.setTexture(texture);
-	sf::FloatRect spriteSize = _menuSprite.getLocalBounds();
-	_menuSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
-	_menuSprite.setScale(0.4, 0.4);
-	_menuSprite.setPosition(_window.getWindowCentrePos().x, _window.getWindowCentrePos().y);
-	initGUI();
+	
 }
 
 void SceneMainMenu::onDestroy()
@@ -23,6 +17,14 @@ void SceneMainMenu::onDestroy()
 
 void SceneMainMenu::onActivate()
 {
+	sf::Texture& texture = Configuration::textures.get(Configuration::Textures::MenuImage);
+	_menuSprite.setTexture(texture);
+	sf::FloatRect spriteSize = _menuSprite.getLocalBounds();
+	_menuSprite.setOrigin(spriteSize.width * 0.5f, spriteSize.height * 0.5f);
+	_menuSprite.setScale(0.4, 0.4);
+	_menuSprite.setPosition(_window.getWindowCentrePos().x, _window.getWindowCentrePos().y);
+	initGUI();
+
 	Configuration::musics.get(Configuration::Music::MainMenu).setLoop(true);
 	Configuration::musics.get(Configuration::Music::MainMenu).play();
 }
@@ -55,9 +57,6 @@ void SceneMainMenu::processInput()
 		{
 			switch (_status)
 			{
-			case Status::StatusMainMenu:
-				_mainMenu.processEvent(evt);
-				break;
 			default:
 				_mainMenu.processEvent(evt);
 				break;
@@ -94,17 +93,41 @@ void SceneMainMenu::draw(Window& window)
 
 void SceneMainMenu::initGUI()
 {
+	//New game button text
+	
+	
 	VLayout* layout = new VLayout();
-	layout->setSpace(1);
+	
+	layout->setSpace(2);
 	TextButton* newGame = new TextButton("New Game");
 	newGame->hideShape();
 	newGame->setTextColor(sf::Color(176, 176, 176, 255));
 	newGame->onClick = [this](const sf::Event&, Button& button) {
-		//initGame();
+		_sceneStateMachine.switchTo(_switchToState);
 		_status = Status::StatusGame;
 	};
 	layout->add(newGame);
 
+	//Load game button text
+	TextButton* Loadgame = new TextButton("Load game");
+	Loadgame->setTextColor(sf::Color(176, 176, 176, 255));
+	Loadgame->hideShape();
+
+	Loadgame->onClick = [this](const sf::Event&, Button& button) {
+		
+	};
+	layout->add(Loadgame);
+
+	//Controls button text
+	TextButton* ControlsButton = new TextButton("Controls");
+	ControlsButton->setTextColor(sf::Color(176, 176, 176, 255));
+	ControlsButton->hideShape();
+	ControlsButton->onClick = [this](const sf::Event&, Button& button) {
+
+	};
+	layout->add(ControlsButton);
+
+	//Exit button text
 	TextButton* exit = new TextButton("Exit");
 	exit->setTextColor(sf::Color(176, 176, 176, 255));
 	exit->hideShape();
@@ -114,6 +137,7 @@ void SceneMainMenu::initGUI()
 	layout->add(exit);
 
 	_mainMenu.setLayout(layout);
+
 	_mainMenu.bind(Configuration::GuiInputs::Escape, [this](const sf::Event& evt) {
 		_window.close();
 		});
