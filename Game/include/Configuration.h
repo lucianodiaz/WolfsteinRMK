@@ -36,6 +36,7 @@ public:
 		PlayerTexture,
 		WeakEnemy,
 		Walls,
+		WolfTextures,
 		TittleScreenImage,
 		MenuImage,		
 	};

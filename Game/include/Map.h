@@ -13,22 +13,21 @@ public:
 
 	void loadLevel(Configuration::Images tex_id);
 
-	Cell getTile(int x, int y)const;
-	std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> getMap()const;
+    Cell getTile(int x, int y)const;
     enum class WallTexture {
-        Smiley,
-        Red,
-        Bush,
-        Sky,
-        Pink,
-        Wallpaper,
-        Dirt,
-        Exit,
+        Flag,
+        Brick,
+        Moo,
+        Stone,
+        BlueStone,
+        MooStone,
+        Wood,
+        Refined,
     };
     const std::unordered_map<char, WallTexture> wallTypes{
-    {Cell::Wall, WallTexture::Pink},
-    //{Cell::Wall, WallTexture::Dirt},
-    //{Cell::Wall, WallTexture::Wallpaper},
+    {Cell::Blue, WallTexture::BlueStone},
+    {Cell::Black, WallTexture::Stone},
+    {Cell::Brown, WallTexture::Wood},
     //{Cell::Wall, WallTexture::Bush},
     //{Cell::Wall, WallTexture::Sky},
     //{Cell::Wall, WallTexture::Red},
@@ -36,6 +35,6 @@ public:
     //{Cell::Wall, WallTexture::Exit},
     };
 private:
-	std::array<std::array<Cell, MAP_HEIGHT>, MAP_WIDTH> _map;
+    std::vector<Cell> _cellMap;
 };
 

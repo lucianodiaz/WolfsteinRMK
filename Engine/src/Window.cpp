@@ -5,7 +5,7 @@ Window::Window(int width, int height, string title)
 	_width = width;
 	_height = height;
 	_title = title;
-	_window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title);
+	_window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close);
 }
 
 Window::~Window()

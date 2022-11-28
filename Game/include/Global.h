@@ -4,18 +4,22 @@
 #define BLUE sf::Color(0,0,255)
 #define RED sf::Color(255,0,0)
 #define GREEN sf::Color(0,255,0)
+#define BROWN sf::Color(170,85,0)
 
 constexpr float PI = 3.141592653589793116f;
-constexpr unsigned char CELL_SIZE = 1;
-constexpr unsigned char MAP_HEIGHT = 24;
-constexpr unsigned char MAP_WIDTH = 40;
+constexpr int MAP_HEIGHT = 73;
+constexpr int MAP_WIDTH = 74;
 
 const int texture_size = 512;
-const int texture_wall_size = 128;
+const int texture_wall_size = 64;
 
 
 enum Cell
 {
 	Empty,
-	Wall
+	Black,
+	Blue,
+	Red,
+	Green,
+	Brown
 };

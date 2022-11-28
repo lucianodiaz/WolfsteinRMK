@@ -26,8 +26,10 @@ Player::Player(World& world) : Entity(Configuration::Textures::PlayerTexture,wor
 		_moveForward = -1;
 		});
 
-	_state = &Configuration::textures.get(Configuration::Textures::Walls);
+	_state = &Configuration::textures.get(Configuration::Textures::WolfTextures);
 	
+    _direction = rotateVec(_direction,4.7f);
+    _plane = rotateVec(_plane, 4.7f);
 }
 
 bool Player::isCollide(const Entity& other) const
@@ -39,19 +41,21 @@ void Player::update(sf::Time deltaTime)
 {
 
 	float seconds = deltaTime.asSeconds();
-
+   
 	if (_moveForward != 0.0f)
 	{
+        /*sf::Vector2f lastPosition = (_position);*/
+        
 		sf::Vector2f moveVec = _direction * (_moveSpeed * _moveForward * seconds);
 
-		if (!Collision::mapCollision(_position.x +moveVec.x, _position.y, _world.getMap()))
-		{
-			_position.y += moveVec.y;
-		}
-		if (!Collision::mapCollision(_position.x, _position.y + moveVec.y, _world.getMap()))
-		{
-			_position.x += moveVec.x;
-		}
+        if (Collision::canMove(sf::Vector2f(_position.x + moveVec.x, _position.y), size,_world.getMap()))
+        {
+            _position.x += moveVec.x;
+        }
+        if (Collision::canMove(sf::Vector2f(_position.x, _position.y + moveVec.y), size, _world.getMap()))
+        {
+            _position.y += moveVec.y;
+        }
 	}
 
 	if (_rotateDirection != 0.0f)
@@ -166,7 +170,7 @@ void Player::update(sf::Time deltaTime)
         int drawEnd = groundPixel;
 
         // get position of the wall texture in the full texture
-        int wallTextureNum = 1;//(int)wallTypes.find(tile)->second;
+        int wallTextureNum = (int)_world.getMap().wallTypes.find(tile)->second;
         sf::Vector2i texture_coords(
             wallTextureNum * texture_wall_size % texture_size,
             wallTextureNum * texture_wall_size / texture_size * texture_wall_size

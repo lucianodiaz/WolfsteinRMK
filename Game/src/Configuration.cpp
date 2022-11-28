@@ -33,9 +33,10 @@ void Configuration::initTextures()
 	textures.load(Textures::TittleScreenImage, "assets/images/tittleScreen.jpg");
 	textures.load(Textures::MenuImage, "assets/images/menu.png");
 	textures.load(Textures::Walls, "assets/maps/walls.png");
+	textures.load(Textures::WolfTextures, "assets/maps/wolftextures.png");
 
 	images.load(Images::icon, "assets/images/icon/icon.png");
-	images.load(Images::TestMap, "assets/maps/test.png");
+	images.load(Images::TestMap, "assets/maps/level1.png");
 }
 
 void Configuration::initMusics()
