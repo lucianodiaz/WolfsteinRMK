@@ -44,11 +44,11 @@ void Player::update(sf::Time deltaTime)
 	{
 		sf::Vector2f moveVec = _direction * (_moveSpeed * _moveForward * seconds);
 
-		if (Collision::mapCollision(_position.x +moveVec.x, _position.y, _world.getMap()))
+		if (!Collision::mapCollision(_position.x +moveVec.x, _position.y, _world.getMap()))
 		{
 			_position.y += moveVec.y;
 		}
-		if (Collision::mapCollision(_position.x, _position.y + moveVec.y, _world.getMap()))
+		if (!Collision::mapCollision(_position.x, _position.y + moveVec.y, _world.getMap()))
 		{
 			_position.x += moveVec.x;
 		}
