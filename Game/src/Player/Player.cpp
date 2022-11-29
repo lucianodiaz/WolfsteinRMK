@@ -28,8 +28,10 @@ Player::Player(World& world) : Entity(Configuration::Textures::PlayerTexture,wor
 
 	_state = &Configuration::textures.get(Configuration::Textures::WolfTextures);
 	
-    _direction = rotateVec(_direction,4.7f);
-    _plane = rotateVec(_plane, 4.7f);
+    _direction = rotateVec(_direction,2.0f);
+    _plane = rotateVec(_plane, 2.0f);
+
+    _position = Configuration::getInitialPos();
 }
 
 bool Player::isCollide(const Entity& other) const
@@ -117,8 +119,8 @@ void Player::update(sf::Time deltaTime)
         int groundPixel = screenHeight; // position of ground pixel on the screen
 
         // colors for floor tiles
-        sf::Color color1 = sf::Color(128,128,128);
-        sf::Color color2 = sf::Color(128, 128, 128);
+        sf::Color color1 = sf::Color::White;
+        sf::Color color2 = sf::Color::White;
 
         // current floor color
         sf::Color color = ((mapPos.x % 2 == 0 && mapPos.y % 2 == 0) ||

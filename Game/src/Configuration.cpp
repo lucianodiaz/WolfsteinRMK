@@ -12,6 +12,8 @@ ActionMap<int> Configuration::playerInputs;
 int Configuration::_score;
 int Configuration::lives;
 
+sf::Vector2f Configuration::_initialPosition;
+
 Player* Configuration::player = nullptr;
 
 void Configuration::initialize()
@@ -23,6 +25,14 @@ void Configuration::initialize()
 	initGuiInputs();
 }
 
+const sf::Vector2f Configuration::getInitialPos()
+{
+	return _initialPosition;
+}
+void Configuration::setInitialPosition(sf::Vector2f pos)
+{
+	_initialPosition = pos;
+}
 void Configuration::draw(sf::RenderTarget& target)
 {
 }

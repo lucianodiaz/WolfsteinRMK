@@ -27,6 +27,30 @@ void Map::loadLevel(Configuration::Images tex_id)
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Blue;
 			}
+			else if (pixel == RED)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::Red;
+			}
+			else if (pixel == BLACKRED)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::BlackRed;
+			}
+			else if (pixel == YELLOW)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::Yellow;
+			}
+			else if (pixel == CYAN)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::Cyan;
+			}
+			else if (pixel == GREY)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::Grey;
+			}
+			else if (pixel == GREEN)
+			{
+				Configuration::setInitialPosition(sf::Vector2f(a, b));
+			}
 			else
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Empty;

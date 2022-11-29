@@ -25,7 +25,7 @@ private:
     //FPS
     const float cameraHeight = 0.66f;//Heigth of player camera(1.0 is ceiling, 0.0 is floor)
 
-    sf::Vector2f _position{ 2.f, 2.f };//Coordinates in WorldMap
+    sf::Vector2f _position{ 0.0f, 0.0f };//Coordinates in WorldMap
     sf::Vector2f _direction{ 0.0f,1.0f };//direction, relative to (0,0)
 	sf::Vector2f _plane{ -0.66f, 0.0f };//2d raycaster version of the camera plane
                                        //must be perpendicular to rotation

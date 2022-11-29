@@ -15,24 +15,24 @@ public:
 
     Cell getTile(int x, int y)const;
     enum class WallTexture {
-        Flag,
-        Brick,
-        Moo,
-        Stone,
-        BlueStone,
-        MooStone,
-        Wood,
-        Refined,
+        Flag,//blackRed
+        Brick,//Red
+        Moo,//cyan
+        Stone,//black
+        BlueStone,//Blue
+        MooStone,//yellow
+        Wood,//brown
+        Refined,//grey
     };
     const std::unordered_map<char, WallTexture> wallTypes{
     {Cell::Blue, WallTexture::BlueStone},
     {Cell::Black, WallTexture::Stone},
     {Cell::Brown, WallTexture::Wood},
-    //{Cell::Wall, WallTexture::Bush},
-    //{Cell::Wall, WallTexture::Sky},
-    //{Cell::Wall, WallTexture::Red},
-    //{Cell::Wall, WallTexture::Smiley},
-    //{Cell::Wall, WallTexture::Exit},
+    {Cell::Red, WallTexture::Brick},
+    {Cell::BlackRed, WallTexture::Flag},
+    {Cell::Cyan, WallTexture::Moo},
+    {Cell::Yellow, WallTexture::MooStone},
+    {Cell::Grey, WallTexture::Refined},
     };
 private:
     std::vector<Cell> _cellMap;

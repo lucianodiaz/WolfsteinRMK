@@ -59,9 +59,15 @@ public:
 
 	static void initialize();
 
+	
+
 	static Player* player;
 	
 	static int lives;
+
+	static const sf::Vector2f getInitialPos();
+
+	static void setInitialPosition(sf::Vector2f pos);
 
 	static void draw(sf::RenderTarget& target);
 
@@ -69,10 +75,14 @@ private:
 
 	static int _score;
 
+	static sf::Vector2f _initialPosition;
+
 	static void initTextures();
 	static void initMusics();
 	static void initFonts();
 	static void initGuiInputs();
 	static void initPlayerInputs();
+
+	
 };
 
