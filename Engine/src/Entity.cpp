@@ -3,7 +3,9 @@
 
 Entity::Entity(Configuration::Textures tex_id, World& world):_world(world),_alive(true)
 {
+
 	sf::Texture& texture = Configuration::textures.get(tex_id);
+	_texture = texture;
 	_sprite.setTexture(texture);
 	_sprite.setOrigin(texture.getSize().x / 2.f, texture.getSize().y / 2.f);
 }

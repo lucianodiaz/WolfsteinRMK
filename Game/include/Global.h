@@ -12,10 +12,10 @@
 #define GREEN sf::Color(0,255,0)
 
 constexpr float PI = 3.141592653589793116f;
-constexpr int MAP_HEIGHT = 52;
-constexpr int MAP_WIDTH = 52;
+constexpr int MAP_HEIGHT = 64;
+constexpr int MAP_WIDTH = 64;
 
-const int texture_size = 512;
+const int texture_size = 190;
 const int texture_wall_size = 64;
 
 

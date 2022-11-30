@@ -29,7 +29,12 @@ public:
 	virtual void onDestroy();
 
 protected:
+
+	sf::Texture _texture;
 	sf::Sprite _sprite;
+
+	sf::Vector2f _position{0.0f,0.0f};
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	World& _world;

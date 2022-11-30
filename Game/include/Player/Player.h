@@ -1,6 +1,8 @@
 #pragma once
 #include "Input/ActionTarget.h"
 #include "Entity.h"
+#include "Camera2d.h"
+
 class Player :
     public Entity,public ActionTarget<int>
 {
@@ -22,9 +24,10 @@ protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
     
-    //FPS
-    const float cameraHeight = 0.66f;//Heigth of player camera(1.0 is ceiling, 0.0 is floor)
+    std::unique_ptr<Camera2d> _camera;
 
+    void raycasting();
+    //FPS
     sf::Vector2f _position{ 0.0f, 0.0f };//Coordinates in WorldMap
     sf::Vector2f _direction{ 0.0f,1.0f };//direction, relative to (0,0)
 	sf::Vector2f _plane{ -0.66f, 0.0f };//2d raycaster version of the camera plane
@@ -35,14 +38,10 @@ private:
 
     sf::Vector2f size{ _size_f, _size_f };
 
-    sf::VertexArray lines;
-
     sf::Vector2f rotateVec(sf::Vector2f vec, float value)const;
 
     int _rotateDirection{};
 
     int _moveForward{};
-
-    sf::RenderStates _state;
 };
 
