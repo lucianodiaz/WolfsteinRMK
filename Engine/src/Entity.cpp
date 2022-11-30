@@ -14,6 +14,16 @@ Entity::~Entity()
 {
 }
 
+void Entity::setGridPosition(float x, float y)
+{
+	_position = sf::Vector2f(x, y);
+}
+
+void Entity::setGridPosition(sf::Vector2f pos)
+{
+	_position = pos;
+}
+
 const sf::Vector2f& Entity::getPosition() const
 {
 	return _sprite.getPosition();

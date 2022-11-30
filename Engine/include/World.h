@@ -22,8 +22,8 @@ public:
 
 	void clear();
 
-	int getX()const;
-	int getY()const;
+	int getWidth()const;
+	int getHeight()const;
 
 	void loadMap(Configuration::Images mapId);
 

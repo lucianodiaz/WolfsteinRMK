@@ -38,7 +38,10 @@ public:
 		Walls,
 		WolfTextures,
 		TittleScreenImage,
-		MenuImage,		
+		MenuImage,
+		Barrel,
+		GreenLight,
+		Pillar
 	};
 	static ResourceManager<sf::Texture> textures;
 

@@ -1,7 +1,8 @@
 #include "Map.h"
+#include "StaticObject.h"
 
 
-Map::Map()
+Map::Map(World& world) : _world(world)
 {
 }
 
@@ -47,6 +48,13 @@ void Map::loadLevel(Configuration::Images tex_id)
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Grey;
 			}
+			else if (pixel == LIGHTGREEN)
+			{
+				StaticObject* obj = new StaticObject(Configuration::Textures::GreenLight,_world);
+				obj->setGridPosition(a, b);
+				_world.add(obj);
+				_sprites.emplace_back(obj);
+			}
 			else if (pixel == GREEN)
 			{
 				Configuration::setInitialPosition(sf::Vector2f(a, b));
@@ -64,4 +72,9 @@ void Map::loadLevel(Configuration::Images tex_id)
 Cell Map::getTile(int x, int y) const
 {
 	return _cellMap.at(y * MAP_WIDTH + x);//[y * MAP_WIDTH + x];
+}
+
+std::vector<StaticObject*> Map::getSprites()const
+{
+	return _sprites;
 }

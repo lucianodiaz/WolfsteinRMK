@@ -59,7 +59,7 @@ void SceneGame::update(sf::Time deltaTime)
 	{
 		//auto pl = new Player(_world);
 		Configuration::player = new Player(_world);
-		Configuration::player->setPosition(_world.getX() / 2, _world.getY() / 2 + 270);
+		Configuration::player->setPosition(_world.getWidth() / 2, _world.getHeight() / 2 + 270);
 		_world.add(Configuration::player);
 	}
 }

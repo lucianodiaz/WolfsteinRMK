@@ -26,7 +26,6 @@ private:
     
     std::unique_ptr<Camera2d> _camera;
 
-    void raycasting();
     //FPS
     sf::Vector2f _position{ 0.0f, 0.0f };//Coordinates in WorldMap
     sf::Vector2f _direction{ 0.0f,1.0f };//direction, relative to (0,0)

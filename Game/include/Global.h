@@ -1,5 +1,6 @@
 #pragma once
 
+//Walls
 #define BLACK sf::Color(0,0,0)
 #define BLUE sf::Color(0,0,255)
 #define RED sf::Color(255,0,0)
@@ -9,6 +10,10 @@
 #define YELLOW sf::Color(255,255,0)
 #define CYAN sf::Color(0,255,255)
 
+//Objects Statics
+#define LIGHTGREEN sf::Color(200,255,0)
+
+//Movable entities
 #define GREEN sf::Color(0,255,0)
 
 constexpr float PI = 3.141592653589793116f;

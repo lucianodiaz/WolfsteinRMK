@@ -45,6 +45,10 @@ void Configuration::initTextures()
 	textures.load(Textures::Walls, "assets/maps/walls.png");
 	textures.load(Textures::WolfTextures, "assets/maps/wolftextures.png");
 
+	textures.load(Textures::Barrel, "assets/statics/barrel.png");
+	textures.load(Textures::GreenLight, "assets/statics/greenlight.png");
+	textures.load(Textures::Pillar, "assets/statics/pillar.png");
+
 	images.load(Images::icon, "assets/images/icon/icon.png");
 	images.load(Images::TestMap, "assets/maps/level1.png");
 }

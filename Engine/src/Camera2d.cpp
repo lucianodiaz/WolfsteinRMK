@@ -1,16 +1,23 @@
+#include <vector>
 #include "Camera2d.h"
-#include "World.h"
 #include "Global.h"
 #include "Map.h"
+#include "World.h"
 
-Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direction, sf::Vector2f size, sf::Vector2f& plane):
-    _world(_world),_position(_position),_direction(_direction),size(size),_plane(plane)
+Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direction, sf::Vector2f size, sf::Vector2f& plane) :
+    _world(_world), _position(_position), _direction(_direction), size(size), _plane(plane)
 {
-    lines = sf::VertexArray(sf::Lines, _world.getX());
+    lines = sf::VertexArray(sf::Lines, _world.getWidth());
     _state = &Configuration::textures.get(Configuration::Textures::Walls);
 
     _direction = rotateVec(_direction, 5.0f);
     _plane = rotateVec(_plane,5.0f);
+
+    
+    _spriteOrder = std::vector(_world.getMap().getSprites().size(), 0);
+    _spriteDistance = std::vector(_world.getMap().getSprites().size(), 0.0);
+
+    _ZBuffer = std::vector(_world.getWidth(), 0.0);
 
 }
 
@@ -26,8 +33,8 @@ void Camera2d::Raycasting(float rotation)
 
     lines.resize(0);
 
-    int screenWidth = _world.getX();
-    int screenHeight = _world.getY();
+    int screenWidth = _world.getWidth();
+    int screenHeight = _world.getHeight();
     // loop through vertical screen lines, draw a line of wall for each
     for (int x = 0; x < screenWidth; ++x) {
 
@@ -122,6 +129,8 @@ void Camera2d::Raycasting(float rotation)
             color = (color == color1) ? color2 : color1;
 
             tile = _world.getMap().getTile(mapPos.x, mapPos.y);
+
+           
         }
 
         // calculate lowest and highest pixel to fill in current line
@@ -174,7 +183,13 @@ void Camera2d::Raycasting(float rotation)
             color,
             sf::Vector2f((float)texture_coords.x, (float)(texture_coords.y + texture_wall_size - 1))
         ));
+
+        _ZBuffer.at(x) = perpWallDist;
     }
+}
+
+void Camera2d::sortSprites(int* order, double* spriteDistance, int ammoun)
+{
 }
 
 sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const

@@ -4,7 +4,7 @@
 
 World::World(float x, float y) : _x(x),_y(y)
 {
-    _currMap = std::make_unique<Map>();
+    _currMap = std::make_unique<Map>(*this);
 }
 
 World::~World()
@@ -74,12 +74,12 @@ void World::clear()
     _entitiesTmp.clear();
 }
 
-int World::getX()const
+int World::getWidth()const
 {
     return _x;
 }
 
-int World::getY()const
+int World::getHeight()const
 {
     return _y;
 }

@@ -4,8 +4,10 @@
 class StaticObject : public Entity, sf::NonCopyable
 {
 public:
+	StaticObject(Configuration::Textures texId, World& world);
 
-	StaticObject(Configuration::Textures tex_id, World& world);
+	virtual bool isCollide(const Entity& other) const override;
 
+	virtual void update(sf::Time deltaTime) override;
 };
 

@@ -18,6 +18,10 @@ public:
 	template<typename ... Args>
 	void setPosition(Args&& ... args);
 
+	void setGridPosition(float x, float y);
+
+	void setGridPosition(sf::Vector2f pos);
+
 	const sf::Vector2f& getPosition()const;
 
 	virtual bool isCollide(const Entity& other) const = 0;

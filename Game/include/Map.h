@@ -5,15 +5,19 @@
 #include "Global.h"
 #include "World.h"
 
+
+class StaticObject;
 class Map
 {
 public:
 
-	Map();
+	Map(World& world);
 
 	void loadLevel(Configuration::Images tex_id);
 
     Cell getTile(int x, int y)const;
+    std::vector<StaticObject*> getSprites()const;
+
     enum class WallTexture {
         Stone = 0,//black
         Stone2 = 1,
@@ -49,6 +53,9 @@ public:
     {Cell::Grey, WallTexture::Refined},
     };
 private:
+
+    std::vector<StaticObject*> _sprites;
     std::vector<Cell> _cellMap;
+    World& _world;
 };
 
