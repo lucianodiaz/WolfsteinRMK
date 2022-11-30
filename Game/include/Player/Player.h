@@ -38,8 +38,6 @@ private:
 
     sf::Vector2f size{ _size_f, _size_f };
 
-    sf::Vector2f rotateVec(sf::Vector2f vec, float value)const;
-
     int _rotateDirection{};
 
     int _moveForward{};
