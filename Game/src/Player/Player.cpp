@@ -24,9 +24,6 @@ Player::Player(World& world) : Entity(Configuration::Textures::PlayerTexture,wor
 		_moveForward = -1;
 		});
 
-    _direction = rotateVec(_direction,2.0f);
-    _plane = rotateVec(_plane, 2.0f);
-
     _position = Configuration::getInitialPos();
 
 	_camera = std::make_unique<Camera2d>(_world, _position, _direction, sf::Vector2f(_size_f, _size_f),_plane);
@@ -57,15 +54,12 @@ void Player::update(sf::Time deltaTime)
             _position.y += moveVec.y;
         }
 	}
-
+	float rotation = 0;
 	if (_rotateDirection != 0.0f)
 	{
-		float rotation = _rotationSpeed * _rotateDirection * seconds;
-		_direction = rotateVec(_direction, rotation);
-		_plane = rotateVec(_plane, rotation);
+		 rotation = _rotationSpeed * _rotateDirection * seconds;
 	}
-
-    raycasting();
+	_camera->Raycasting(rotation);
 }
 
 void Player::processEvents()
@@ -85,17 +79,4 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	_camera->draw(target,states);
 	Entity::draw(target, states);
 	
-}
-
-void Player::raycasting()
-{
-	_camera->Raycasting();
-}
-
-sf::Vector2f Player::rotateVec(sf::Vector2f vec, float value) const
-{
-	return sf::Vector2f(
-        vec.x * std::cos(value) - vec.y * std::sin(value),
-        vec.x * std::sin(value) + vec.y * std::cos(value)
-	);
 }

@@ -8,6 +8,10 @@ Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direct
 {
     lines = sf::VertexArray(sf::Lines, _world.getX());
     _state = &Configuration::textures.get(Configuration::Textures::Walls);
+
+    _direction = rotateVec(_direction, 5.0f);
+    _plane = rotateVec(_plane,5.0f);
+
 }
 
 void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -15,8 +19,11 @@ void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(lines, _state);
 }
 
-void Camera2d::Raycasting()
+void Camera2d::Raycasting(float rotation)
 {
+    _direction = rotateVec(_direction, rotation);
+    _plane = rotateVec(_plane, rotation);
+
     lines.resize(0);
 
     int screenWidth = _world.getX();
@@ -169,11 +176,11 @@ void Camera2d::Raycasting()
         ));
     }
 }
-//
-//sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const
-//{
-//    return sf::Vector2f(
-//        vec.x * std::cos(value) - vec.y * std::sin(value),
-//        vec.x * std::sin(value) + vec.y * std::cos(value)
-//    );
-//}
+
+sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const
+{
+    return sf::Vector2f(
+        vec.x * std::cos(value) - vec.y * std::sin(value),
+        vec.x * std::sin(value) + vec.y * std::cos(value)
+    );
+}
