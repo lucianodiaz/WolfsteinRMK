@@ -13,8 +13,12 @@ public:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	bool isBlock()const { return _collide; }
 	sf::Texture getTexture()const;
 	sf::VertexArray _spriteLines;
 	sf::Vector2f _initialPosition;
+
+protected:
+	bool _collide{};
 };
 

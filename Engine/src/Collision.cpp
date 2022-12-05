@@ -75,22 +75,19 @@ bool Collision::canMove(sf::Vector2f pos, sf::Vector2f size, Map& map)
 
 	
 
-	//for (int y = upper_left.y; y <= lower_right.y; ++y) {
-	//	for (int x = upper_left.x; x <= lower_right.x; ++x) {
+	for (int y = upper_left.y; y <= lower_right.y; ++y) {
+		for (int x = upper_left.x; x <= lower_right.x; ++x) {
 
-	//		for (auto sprites : map.getSprites())
-	//		{
-	//			sf::Vector2i upper_left2(sprites->getGridPosition() - size / 2.0f);
-	//			sf::Vector2i lower_right2(sprites->getGridPosition() + size / 2.0f);
-	//			if (upper_left == upper_left2 && lower_right == lower_right2)
-	//			{
-	//				return false;
-	//			}
-	//		}
-	//		/*if (map.getTile(x, y) != Cell::Empty) {
-	//			return false;
-	//		}*/
-	//	}
-	//}
+			for (auto sprites : map.getSprites())
+			{
+				sf::Vector2i upper_left2(sprites->getGridPosition() - size / 2.0f);
+				sf::Vector2i lower_right2(sprites->getGridPosition() + size / 2.0f);
+				if (upper_left == upper_left2 && lower_right == lower_right2 && sprites->isBlock())
+				{
+					return false;
+				}
+			}
+		}
+	}
 	return true;
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include "Actor.h"
-class Enemy : public Actor
+
+class PickupHealth : public Actor
 {
 public:
-	Enemy(Configuration::Textures texId, World& world);
+	PickupHealth(Configuration::Textures tex_id, World& world);
 
 	virtual bool isCollide(const Entity& other) const override;
 
@@ -11,10 +12,8 @@ public:
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	void receiveDamage(float dmg);
+protected:
 
-private:
-	sf::Time _timeSinceLastShoot;
-	float _health;
+	float _ammountHealth;
 };
 

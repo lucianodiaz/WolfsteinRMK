@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Actor.h"
 #include "Enemy.h"
+#include "BlockActor.h"
 
 Map::Map(World& world) : _world(world)
 {
@@ -50,7 +51,7 @@ void Map::loadLevel(Configuration::Images tex_id)
 			}
 			else if (pixel == LIGHTBROWN)
 			{
-				Actor* obj = new Actor(Configuration::Textures::Barrel, _world);
+				Actor* obj = new BlockActor(Configuration::Textures::Barrel, _world);
 				obj->setGridPosition(a, b);
 				_world.add(obj);
 				_sprites.emplace_back(obj);

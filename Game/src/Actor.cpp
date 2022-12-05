@@ -3,6 +3,7 @@
 Actor::Actor(Configuration::Textures texId, World& world) : Entity(texId , world)
 {
     _spriteLines = sf::VertexArray(sf::Lines, 18 * _world.getWidth());
+    _collide = false;
 }
 
 bool Actor::isCollide(const Entity& other) const

@@ -3,14 +3,17 @@
 #include "Entity.h"
 
 class Camera2d;
+class AnimationManager;
+
+
 
 class Player :
     public Entity,public ActionTarget<int>
 {
 
 public:
-    //Player(const Player&) = delete;
-    //Player& operator=(const Player&) = delete;
+    Player(const Player&) = delete;
+    Player& operator=(const Player&) = delete;
 
     Player(World& world);
 
@@ -22,11 +25,21 @@ public:
 
     void Shoot();
 
+    void receiveDamage(float dmg);
+
+    void getHealth(float heal);
+
     virtual void onDestroy();
+
+    void setKey(bool key) { _key = key; };
+    bool getKey()const { return _key; };
+    
+
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
     
+    std::unique_ptr<AnimationManager> _animationManager;
     std::unique_ptr<Camera2d> _camera;
 
     //FPS
@@ -45,5 +58,11 @@ private:
     int _moveForward{};
 
     sf::Time _timeSinceLastShoot;
+
+    float _health;
+
+    bool _key{};
+
+    bool _isShooting{};
 };
 

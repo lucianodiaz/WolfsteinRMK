@@ -2,10 +2,11 @@
 #include <iostream>
 
 #include "player/Player.h"
+#include "AnimationManager.h"
 #include "Camera2d.h"
-#include "Global.h"
 #include "Configuration.h"
 #include "Collision.h"
+#include "Global.h"
 #include "Map.h"
 
 
@@ -32,16 +33,16 @@ Player::Player(World& world) : Entity(Configuration::Textures::PlayerTexture,wor
 	{
 			Shoot();
 	});
-
-	_sprite.setTextureRect(sf::IntRect(597, 0, 199, 210.5f));
 	setGridPosition(Configuration::getInitialPos());
     _position = Configuration::getInitialPos();
 
 	_sprite.setOrigin(_texture.getSize().x / 2, _texture.getSize().y / 2.f);
-
-	setPosition(_world.getWidth() / 2 + 240, _world.getHeight() / 2 + 370);
-
+	_sprite.setScale(2.5, 2.5);
+	setPosition(_world.getWidth()/2 + 232 , _world.getHeight());
+	_health = 100;
 	_camera = std::make_unique<Camera2d>(_world, _position, _direction, sf::Vector2f(_size_f, _size_f), _plane);
+
+	_animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 2), 0.1f);
 }
 
 bool Player::isCollide(const Entity& other) const
@@ -78,7 +79,8 @@ void Player::update(sf::Time deltaTime)
 		 rotation = _rotationSpeed * _rotateDirection * seconds;
 	}
 
-	
+	_animationManager->update(0, deltaTime);
+	_sprite.setTextureRect(_animationManager->uvRect);
 	_camera->Raycasting(rotation);
 }
 
@@ -93,11 +95,28 @@ void Player::Shoot()
 {
 	if (_timeSinceLastShoot > sf::seconds(0.5))
 	{
+		
+		_animationManager->playAnimation();
+		_isShooting = true;
 		std::cout << "Shoot" << std::endl;
 		_timeSinceLastShoot = sf::Time::Zero;
+
+		
 	}
 	
 }
+
+void Player::receiveDamage(float dmg)
+{
+	_health = std::clamp((_health - dmg), 0.0f, 100.0f);
+}
+
+void Player::getHealth(float heal)
+{
+	_health = std::clamp(_health + heal,0.0f,100.0f);
+}
+
+
 
 void Player::onDestroy()
 {
