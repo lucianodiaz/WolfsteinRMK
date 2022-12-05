@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\src\Enemy.cpp" />
     <ClCompile Include="Engine\src\Camera2d.cpp" />
     <ClCompile Include="Engine\src\Collision.cpp" />
     <ClCompile Include="Engine\src\Scene\SceneStateMachine.cpp" />
@@ -173,9 +174,10 @@
     <ClCompile Include="Game\src\gameScenes\SceneGame.cpp" />
     <ClCompile Include="Game\src\Player\Player.cpp" />
     <ClCompile Include="Game\src\Map.cpp" />
-    <ClCompile Include="Game\src\StaticObject.cpp" />
+    <ClCompile Include="Game\src\Actor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\include\Enemy.h" />
     <ClInclude Include="Engine\include\Camera2d.h" />
     <ClInclude Include="Engine\include\Collision.h" />
     <ClInclude Include="Engine\include\GUI\Container.h" />
@@ -204,7 +206,7 @@
     <ClInclude Include="Game\include\Global.h" />
     <ClInclude Include="Game\include\Player\Player.h" />
     <ClInclude Include="Game\include\Map.h" />
-    <ClInclude Include="Engine\include\StaticObject.h" />
+    <ClInclude Include="Game\include\Actor.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\Arcade.ttf" />

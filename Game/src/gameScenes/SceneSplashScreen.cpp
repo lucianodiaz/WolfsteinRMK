@@ -44,6 +44,7 @@ void SceneSplashScreen::onActivate()
 
 	Configuration::musics.get(Configuration::Music::TittleScreen).setLoop(true);
 	Configuration::musics.get(Configuration::Music::TittleScreen).play();
+	Configuration::musics.get(Configuration::Music::TittleScreen).setVolume(0.5);
 }
 
 void SceneSplashScreen::onDeactivate()

@@ -22,6 +22,8 @@ public:
 
 	void setGridPosition(sf::Vector2f pos);
 
+	const sf::Vector2f& getGridPosition()const;
+
 	const sf::Vector2f& getPosition()const;
 
 	virtual bool isCollide(const Entity& other) const = 0;

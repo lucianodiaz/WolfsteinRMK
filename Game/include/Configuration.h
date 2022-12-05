@@ -18,7 +18,8 @@ public:
 		Up,
 		Down,
 		Right,
-		Left
+		Left,
+		Shoot
 	};
 	static ActionMap<int> playerInputs;
 
@@ -34,14 +35,18 @@ public:
 	enum Textures : int
 	{
 		PlayerTexture,
-		WeakEnemy,
 		Walls,
 		WolfTextures,
 		TittleScreenImage,
 		MenuImage,
 		Barrel,
 		GreenLight,
-		Pillar
+		Pillar,
+		Guard,
+		Health,
+		Key,
+		Table,
+		Treasure
 	};
 	static ResourceManager<sf::Texture> textures;
 
@@ -63,6 +68,7 @@ public:
 	static void initialize();
 
 	
+	static Player& getPlayer();
 
 	static Player* player;
 	

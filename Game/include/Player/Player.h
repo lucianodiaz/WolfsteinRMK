@@ -1,15 +1,16 @@
 #pragma once
 #include "Input/ActionTarget.h"
 #include "Entity.h"
-#include "Camera2d.h"
+
+class Camera2d;
 
 class Player :
     public Entity,public ActionTarget<int>
 {
 
 public:
-    Player(const Player&) = delete;
-    Player& operator=(const Player&) = delete;
+    //Player(const Player&) = delete;
+    //Player& operator=(const Player&) = delete;
 
     Player(World& world);
 
@@ -18,6 +19,8 @@ public:
     virtual void update(sf::Time deltaTime) override;
 
     void processEvents();
+
+    void Shoot();
 
     virtual void onDestroy();
 protected:
@@ -40,5 +43,7 @@ private:
     int _rotateDirection{};
 
     int _moveForward{};
+
+    sf::Time _timeSinceLastShoot;
 };
 

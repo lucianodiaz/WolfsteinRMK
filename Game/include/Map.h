@@ -1,12 +1,11 @@
 #pragma once
-#include <array>
 #include <unordered_map>
 #include "Configuration.h"
 #include "Global.h"
 #include "World.h"
 
 
-class StaticObject;
+class Actor;
 class Map
 {
 public:
@@ -16,7 +15,7 @@ public:
 	void loadLevel(Configuration::Images tex_id);
 
     Cell getTile(int x, int y)const;
-    std::vector<StaticObject*> getSprites()const;
+    std::vector<Actor*> getSprites()const;
 
     enum class WallTexture {
         Stone = 0,//black
@@ -54,7 +53,7 @@ public:
     };
 private:
 
-    std::vector<StaticObject*> _sprites;
+    std::vector<Actor*> _sprites;
     std::vector<Cell> _cellMap;
     World& _world;
 };

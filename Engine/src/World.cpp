@@ -1,6 +1,7 @@
 #include "World.h"
 #include "Entity.h"
 #include "Map.h"
+#include <Enemy.h>
 
 World::World(float x, float y) : _x(x),_y(y)
 {
@@ -26,9 +27,8 @@ void World::update(sf::Time deltaTime)
         {
             entity.update(deltaTime);
         }
-		
 	}
-    for (auto it = _entities.begin(); it != _entities.end();)
+    /*for (auto it = _entities.begin(); it != _entities.end();)
     {
         if (not (*it)->isAlive())
         {
@@ -37,22 +37,9 @@ void World::update(sf::Time deltaTime)
         }
         else
             ++it;
-    }
-   
-    /*const auto end = _entities.end();
-    for (auto it_i = _entities.begin(); it_i != end; ++it_i)
-    {
-        if ()
-            Entity& entity_i = **it_i;
-            auto it_j = it_i;
-            it_j++;
-
-            for (; it_j != end; ++it_j)
-            {
-                Entity& entity_j = **it_j;
-
-            }
     }*/
+   
+    
 }
 
 void World::add(Entity* entity)

@@ -1,6 +1,8 @@
 #pragma once
-#include "World.h"
-#include <StaticObject.h>
+#include "Actor.h"
+
+class World;
+
 
 class Camera2d : public sf::Drawable, private sf::NonCopyable
 {
@@ -18,7 +20,7 @@ protected:
 	std::vector<int> _spriteOrder;
 	std::vector<double> _spriteDistance;
 
-	void sortSprites(int* order, double* spriteDistance, int ammoun);
+	void sortSprites(std::vector<int>* order, std::vector<double>* dist, int amount);
 
 	sf::Vector2f rotateVec(sf::Vector2f vec, float value)const;
 
@@ -29,7 +31,8 @@ protected:
 
 	
 	const float cameraHeight = 0.66f;//Heigth of player camera(1.0 is ceiling, 0.0 is floor)
-	sf::VertexArray lines;
+	sf::VertexArray _lines;
+	/*sf::VertexArray _spriteLines;*/
 	sf::RenderStates _state;
 
 	World& _world;

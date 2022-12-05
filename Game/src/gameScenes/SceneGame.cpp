@@ -2,6 +2,7 @@
 #include "Configuration.h"
 #include "World.h"
 #include "Player/Player.h"
+#include "Actor.h"
 
 
 SceneGame::SceneGame(SceneStateMachine& ssm, Window& window, World& world) :
@@ -38,6 +39,8 @@ void SceneGame::processInput()
 	sf::Event evt;
 	while (_window.pollEvent(evt))
 	{
+		if (evt.type == sf::Event::Closed)
+			_window.close();
 		if (evt.type == sf::Event::KeyPressed)
 		{
 			if (evt.key.code == sf::Keyboard::Escape)
@@ -59,7 +62,6 @@ void SceneGame::update(sf::Time deltaTime)
 	{
 		//auto pl = new Player(_world);
 		Configuration::player = new Player(_world);
-		Configuration::player->setPosition(_world.getWidth() / 2, _world.getHeight() / 2 + 270);
 		_world.add(Configuration::player);
 	}
 }

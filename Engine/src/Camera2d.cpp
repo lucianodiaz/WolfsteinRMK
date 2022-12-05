@@ -4,13 +4,15 @@
 #include "Map.h"
 #include "World.h"
 
-Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direction, sf::Vector2f size, sf::Vector2f& plane) :
-    _world(_world), _position(_position), _direction(_direction), size(size), _plane(plane)
+Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& direction, sf::Vector2f size, sf::Vector2f& plane) :
+    _world(_world), _position(_position), _direction(direction), size(size), _plane(plane)
 {
-    lines = sf::VertexArray(sf::Lines, _world.getWidth());
+    _lines = sf::VertexArray(sf::Lines, _world.getWidth());
+    
+
     _state = &Configuration::textures.get(Configuration::Textures::Walls);
 
-    _direction = rotateVec(_direction, 5.0f);
+    _direction = rotateVec(direction, 5.0f);
     _plane = rotateVec(_plane,5.0f);
 
     
@@ -21,17 +23,14 @@ Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direct
 
 }
 
-void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    target.draw(lines, _state);
-}
 
 void Camera2d::Raycasting(float rotation)
 {
+    RaycastingSprite();
     _direction = rotateVec(_direction, rotation);
     _plane = rotateVec(_plane, rotation);
-
-    lines.resize(0);
+    //Start Raycasting Sprite
+    _lines.resize(0);
 
     int screenWidth = _world.getWidth();
     int screenHeight = _world.getHeight();
@@ -56,6 +55,7 @@ void Camera2d::Raycasting(float rotation)
         sf::Vector2i step; // what direction to step in (+1 or -1 for each dimension)
         sf::Vector2f sideDist; // distance from current position to next gridline, for x and y separately
 
+        
         // calculate step and initial sideDist
         if (rayDir.x < 0.0f) {
             step.x = -1;
@@ -73,7 +73,7 @@ void Camera2d::Raycasting(float rotation)
             step.y = 1;
             sideDist.y = (mapPos.y + 1.0f - rayPos.y) * deltaDist.y;
         }
-
+      
         char tile = Cell::Empty; // tile type that got hit
         bool horizontal; // did we hit a horizontal side? Otherwise it's vertical
 
@@ -83,8 +83,8 @@ void Camera2d::Raycasting(float rotation)
         int groundPixel = screenHeight; // position of ground pixel on the screen
 
         // colors for floor tiles
-        sf::Color color1 = sf::Color::White;
-        sf::Color color2 = sf::Color::White;
+        sf::Color color1 = sf::Color::Green;
+        sf::Color color2 = sf::Color::Cyan;
 
         // current floor color
         sf::Color color = ((mapPos.x % 2 == 0 && mapPos.y % 2 == 0) ||
@@ -109,9 +109,9 @@ void Camera2d::Raycasting(float rotation)
 
             // add floor
 
-            lines.append(sf::Vertex(sf::Vector2f((float)x, (float)groundPixel), color, sf::Vector2f(385.0f, 129.0f)));
+            _lines.append(sf::Vertex(sf::Vector2f((float)x, (float)groundPixel), color, sf::Vector2f(385.0f, 129.0f)));
             groundPixel = int(wallHeight * cameraHeight + screenHeight * 0.5f);
-            lines.append(sf::Vertex(sf::Vector2f((float)x, (float)groundPixel), color, sf::Vector2f(385.0f, 129.0f)));
+            _lines.append(sf::Vertex(sf::Vector2f((float)x, (float)groundPixel), color, sf::Vector2f(385.0f, 129.0f)));
 
             // add ceiling
 
@@ -120,13 +120,13 @@ void Camera2d::Raycasting(float rotation)
             color_c.g /= 2;
             color_c.b /= 2;
 
-            lines.append(sf::Vertex(sf::Vector2f((float)x, (float)ceilingPixel), color_c, sf::Vector2f(385.0f, 129.0f)));
+            _lines.append(sf::Vertex(sf::Vector2f((float)x, (float)ceilingPixel), color_c, sf::Vector2f(385.0f, 129.0f)));
             ceilingPixel = int(-wallHeight * (1.0f - cameraHeight) + screenHeight * 0.5f);
-            lines.append(sf::Vertex(sf::Vector2f((float)x, (float)ceilingPixel), color_c, sf::Vector2f(385.0f, 129.0f)));
+            _lines.append(sf::Vertex(sf::Vector2f((float)x, (float)ceilingPixel), color_c, sf::Vector2f(385.0f, 129.0f)));
 
             // change color and find tile type
 
-            color = (color == color1) ? color2 : color1;
+            color = color1;
 
             tile = _world.getMap().getTile(mapPos.x, mapPos.y);
 
@@ -173,12 +173,12 @@ void Camera2d::Raycasting(float rotation)
         }
 
         // add line to vertex buffer
-        lines.append(sf::Vertex(
+        _lines.append(sf::Vertex(
             sf::Vector2f((float)x, (float)drawStart),
             color,
             sf::Vector2f((float)texture_coords.x, (float)texture_coords.y + 1)
         ));
-        lines.append(sf::Vertex(
+        _lines.append(sf::Vertex(
             sf::Vector2f((float)x, (float)drawEnd),
             color,
             sf::Vector2f((float)texture_coords.x, (float)(texture_coords.y + texture_wall_size - 1))
@@ -186,10 +186,229 @@ void Camera2d::Raycasting(float rotation)
 
         _ZBuffer.at(x) = perpWallDist;
     }
+
+   
+
 }
 
-void Camera2d::sortSprites(int* order, double* spriteDistance, int ammoun)
+void Camera2d::RaycastingSprite()
 {
+    sf::VertexArray spriteLines(sf::Lines, _world.getWidth());
+    spriteLines.resize(0);
+    for (auto s : _world.getMap().getSprites())
+    {
+        if (s->isAlive())
+        {
+            s->_spriteLines = spriteLines;
+        }
+       
+    }
+    unsigned int numberOfSprites = _world.getMap().getSprites().size();
+
+    for (int i = 0; i < numberOfSprites; i++) {
+        auto sprite = _world.getMap().getSprites().at(i);
+        _spriteOrder.at(i) = i;
+        _spriteDistance.at(i) = ((_position.x- sprite->getGridPosition().x) * (_position.x - sprite->getGridPosition().x) +
+            (_position.y- sprite->getGridPosition().y) * (_position.y - sprite->getGridPosition().y));
+
+    }
+
+    sortSprites(&_spriteOrder, &_spriteDistance, numberOfSprites);
+
+    for (int j = 0; j < numberOfSprites; j++)
+    {
+        auto sprite = _world.getMap().getSprites().at(_spriteOrder[j]);
+
+        sprite->_spriteLines.clear();
+
+        double spriteX = sprite->getGridPosition().x - _position.x;
+        double spriteY = sprite->getGridPosition().y - _position.y;
+
+        double invDet = 1.0 / (_plane.x * _direction.y - _direction.x * _plane.y);
+
+        double transformX = invDet * (_direction.y * spriteX - _direction.x * spriteY);
+        double transformY = invDet * (-_plane.y * spriteX + _plane.x * spriteY);
+
+        int spriteScreenX = int(((float)_world.getWidth() / 2) * (1 + transformX / transformY));
+
+        //stuff for scaling and moving sprites to the floor
+#define vMove 128
+#define SpriteScale 1
+        int vMoveScreen = int(vMove / transformY);
+
+        //stuff for scaling sprite in Y axis
+        int overflowPixels = 0;
+        int pixelAdjustment = 0;
+
+        int spriteHeight = abs(int(_world.getHeight() / (transformY))) / SpriteScale;
+
+        int drawStartY = -spriteHeight / 2 + _world.getHeight() / 2 + vMoveScreen;
+
+        if (drawStartY < 0) drawStartY =0;
+
+        int drawEndY = spriteHeight / 2 + _world.getHeight() / 2 + vMoveScreen;
+
+        if (drawEndY >= _world.getHeight())
+        {
+            overflowPixels = drawEndY - _world.getHeight();
+            pixelAdjustment = texWidth * overflowPixels / _world.getHeight();
+            drawEndY = _world.getHeight();
+        }
+
+        //calculating X axis variable
+
+        int spriteWidth = abs(int(_world.getHeight() / (transformY))) / SpriteScale;
+
+        int drawStartX = -spriteWidth / 2 + spriteScreenX;
+        if (drawStartX < 0)
+        {
+            drawStartX = 0;
+        }
+        int drawEndX = spriteWidth / 2 + spriteScreenX;
+        if (drawEndX >= _world.getWidth())
+        {
+            drawEndX = _world.getWidth() - 1;
+        }
+
+        for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+        {
+            int texX = int(512 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 512;
+
+            if (transformY > 0 && stripe > 0 && stripe < _world.getWidth() && transformY < _ZBuffer[stripe])
+            {
+                spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawStartY),
+                    sf::Vector2f((float)texX, (float)(1))));
+
+                spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawEndY),
+                    sf::Vector2f((float)texX, (float)(texWidth-1-pixelAdjustment))));
+
+                sprite->_spriteLines = spriteLines;
+            }
+        }
+    }
+
+    spriteLines.clear();
+   /*
+   for (int i = 0; i < _world.getMap().getSprites().size(); i++)
+    {
+        Entity* entity = _world.getMap().getSprites().at(i);
+        _spriteOrder.at(i) = i;
+        _spriteDistance.at(i) = ((_position.x - entity->getGridPosition().x) * (_position.x - entity->getGridPosition().x) +
+                                 (_position.y - entity->getGridPosition().y) * (_position.y - entity->getGridPosition().y));
+    }
+
+    sortSprites(_spriteOrder, _spriteDistance, _world.getMap().getSprites().size());
+    int width = _world.getWidth();
+    //after sorting the sprites, do the projection and draw them
+    for (int i = 0; i < _world.getMap().getSprites().size(); i++)
+    {
+        //translate sprite position to relative to camera
+        double spriteX = _world.getMap().getSprites().at(i)->getGridPosition().x - _position.x;
+        double spriteY = _world.getMap().getSprites().at(i)->getGridPosition().y - _position.y;
+
+        double invDet = 1.0 / (_plane.x * _direction.y - _direction.x * _plane.y);
+
+        double transformX = invDet * (_direction.y * spriteX - _direction.x * spriteY);
+        double transformY = invDet * (-_plane.y * spriteX + _plane.x * spriteY); //this is actually the depth the screen, that what Z is in 3D
+
+
+        if (transformY < 0) continue;
+
+        int spriteScreenX = int((width / 2) * (1 + transformX / transformY));
+
+        //Calculate heighht of the sprite on screen
+        int spriteHeight = abs(int(_world.getHeight() / (transformY)));
+
+        int drawStartY = -spriteHeight / 2 + _world.getHeight() / 2;
+        if (drawStartY < 0) drawStartY = 0;
+
+        int drawEndY = spriteHeight / 2 + _world.getHeight() / 2;
+        if (drawEndY >= _world.getHeight()) drawEndY = _world.getHeight() - 1;
+
+        //calculate width of the sprite
+        int spriteWidth = abs(int(_world.getHeight() / (transformY)));
+
+        int drawStartX = -spriteWidth / 2 + spriteScreenX;
+        if (drawStartX < 0) drawStartX = 0;
+        int drawEndX = spriteWidth / 2 + spriteScreenX;
+        if (drawEndX >=width) drawEndX = width - 1;
+
+        int drawWidth = drawEndX - drawStartX;
+        int drawOrigStartX = drawStartX;
+
+        int spriteLeft = 0;
+        int spriteRight = texWidth;
+        int spriteTop = 0;
+        int spriteBottom = texHeigth;
+
+        //loop through every vertical sprite of the sprite on screen
+
+        for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+        {
+            if (stripe < 0)
+            {
+                drawStartX += 1;
+            }
+            if (transformY > this->_ZBuffer[stripe]) 
+            {
+                drawStartX += 1;
+            }
+        }
+
+        int newWidth = drawEndX - drawStartX;
+        float d = (float)drawWidth / (float)newWidth;
+
+        spriteLeft = texWidth - (float)texWidth / d;
+
+        for (int stripe = drawEndX; stripe > drawStartX; --stripe)
+        {
+            if (stripe > width)
+            {
+                drawEndX -= 1;
+            }
+            if (transformY > _ZBuffer[stripe])
+            {
+                drawEndX -= 1;
+            }
+        }
+
+        newWidth = drawEndX - drawOrigStartX;
+        d = (float)drawWidth / (float)newWidth;
+
+        spriteRight = (float)texWidth / d;
+
+        //_world.getMap().getSprites().at(i)->spriteQuad[0]
+        _world.getMap().getSprites().at(i)->spriteQuad[0].position = sf::Vector2f(drawStartX, drawStartY);
+        _world.getMap().getSprites().at(i)->spriteQuad[0].texCoords = sf::Vector2f(spriteLeft, spriteTop);
+        _world.getMap().getSprites().at(i)->spriteQuad[1].position = sf::Vector2f(drawEndX, drawStartY);
+        _world.getMap().getSprites().at(i)->spriteQuad[1].texCoords = sf::Vector2f(spriteRight, spriteTop);
+ 
+        _world.getMap().getSprites().at(i)->spriteQuad[2].position = sf::Vector2f(drawEndX, drawEndY);
+        _world.getMap().getSprites().at(i)->spriteQuad[2].texCoords = sf::Vector2f(spriteRight, spriteBottom);
+  
+        _world.getMap().getSprites().at(i)->spriteQuad[3].position = sf::Vector2f(drawStartX, drawEndY);
+        _world.getMap().getSprites().at(i)->spriteQuad[3].texCoords = sf::Vector2f(spriteLeft, spriteBottom);
+
+    }
+   */ 
+    
+}
+
+void Camera2d::sortSprites(std::vector<int>* order, std::vector<double>* dist, int amount)
+{
+    std::vector<std::pair<double, int>> sprites(amount);
+    for (int i = 0; i < amount; i++)
+    {
+        sprites[i].first = dist->at(i);
+        sprites[i].second = order->at(i);
+    }
+    std::sort(sprites.begin(), sprites.end());
+
+    for (int i = 0; i < amount; i++)
+    {
+        dist->at(i) = sprites[amount - i - 1].first;
+        order->at(i) = sprites[amount - i - 1].second;
+    }
 }
 
 sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const
@@ -198,4 +417,16 @@ sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const
         vec.x * std::cos(value) - vec.y * std::sin(value),
         vec.x * std::sin(value) + vec.y * std::cos(value)
     );
+}
+
+void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+
+    target.draw(_lines, _state);
+   
+    for (auto sprite : _world.getMap().getSprites())
+    {
+        if (sprite->isAlive())sprite->draw(target, states);
+    }
+    
 }

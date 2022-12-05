@@ -81,10 +81,13 @@
     <ClCompile Include="Engine\src\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game\src\StaticObject.cpp">
+    <ClCompile Include="Game\src\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\src\Camera2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\src\Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,10 +173,13 @@
     <ClInclude Include="Engine\include\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\StaticObject.h">
+    <ClInclude Include="Game\include\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Camera2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\include\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

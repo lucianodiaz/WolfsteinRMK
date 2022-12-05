@@ -73,10 +73,4 @@ void Game::processEvents()
 {
 	sf::Event evt;
 	sceneStateMachine.processInput();
-	while (_window->pollEvent(evt))
-	{
-		if (evt.type == sf::Event::Closed)
-			_window->close();
-	}
-
 }

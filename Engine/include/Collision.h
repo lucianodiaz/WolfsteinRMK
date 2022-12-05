@@ -12,8 +12,9 @@ public:
 	Collision(const Collision&) = delete;
 	Collision& operator=(const Collision&) = delete;
 
+	static bool overlapEntity(const Entity& entity, const Entity& other);
+	static bool collisionEntity(const Entity& entity);
 	static bool circleTest(const sf::Sprite& first, const sf::Sprite& second);
 	static bool canMove(sf::Vector2f pos, sf::Vector2f size, Map& map);
-	static bool mapCollision(float _x, float _y, Map& map);
 };
 

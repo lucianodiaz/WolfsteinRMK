@@ -12,8 +12,11 @@
 
 //Objects Statics
 #define LIGHTGREEN sf::Color(200,255,0)
+#define LIGHTBROWN sf::Color(170,130,0)
+
 
 //Movable entities
+#define LIGHTRED sf::Color(255,70,0)
 #define GREEN sf::Color(0,255,0)
 
 constexpr float PI = 3.141592653589793116f;
@@ -23,6 +26,8 @@ constexpr int MAP_WIDTH = 64;
 const int texture_size = 190;
 const int texture_wall_size = 64;
 
+const int texWidth = 64;
+const int texHeigth = 64;
 
 enum Cell
 {
@@ -35,5 +40,7 @@ enum Cell
 	BlackRed,
 	Grey,
 	Yellow,
-	Cyan
+	Cyan,
+	LightBrown,
+	LightRed
 };

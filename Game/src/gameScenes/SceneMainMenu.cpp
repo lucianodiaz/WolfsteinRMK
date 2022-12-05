@@ -27,6 +27,7 @@ void SceneMainMenu::onActivate()
 
 	Configuration::musics.get(Configuration::Music::MainMenu).setLoop(true);
 	Configuration::musics.get(Configuration::Music::MainMenu).play();
+	Configuration::musics.get(Configuration::Music::MainMenu).setVolume(0.5);
 }
 
 void SceneMainMenu::onDeactivate()

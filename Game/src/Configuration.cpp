@@ -25,6 +25,12 @@ void Configuration::initialize()
 	initGuiInputs();
 }
 
+Player& Configuration::getPlayer()
+{
+	// // O: insert return statement here
+	return *player;
+}
+
 const sf::Vector2f Configuration::getInitialPos()
 {
 	return _initialPosition;
@@ -48,6 +54,14 @@ void Configuration::initTextures()
 	textures.load(Textures::Barrel, "assets/statics/barrel.png");
 	textures.load(Textures::GreenLight, "assets/statics/greenlight.png");
 	textures.load(Textures::Pillar, "assets/statics/pillar.png");
+
+	textures.load(Textures::Health, "assets/statics/health.png");
+	textures.load(Textures::Key, "assets/statics/key.png");
+	textures.load(Textures::Table, "assets/statics/table.png");
+	textures.load(Textures::Treasure, "assets/statics/treasure.png");
+
+
+	textures.load(Textures::Guard, "assets/enemies/guard.png");
 
 	images.load(Images::icon, "assets/images/icon/icon.png");
 	images.load(Images::TestMap, "assets/maps/level1.png");
@@ -75,8 +89,9 @@ void Configuration::initGuiInputs()
 
 void Configuration::initPlayerInputs()
 {
-	playerInputs.map(PlayerInputs::Up, Action(sf::Keyboard::W));
-	playerInputs.map(PlayerInputs::Down, Action(sf::Keyboard::S));
-	playerInputs.map(PlayerInputs::Left, Action(sf::Keyboard::A));
-	playerInputs.map(PlayerInputs::Right, Action(sf::Keyboard::D));
+	playerInputs.map(PlayerInputs::Up, Action(sf::Keyboard::Up));
+	playerInputs.map(PlayerInputs::Down, Action(sf::Keyboard::Down));
+	playerInputs.map(PlayerInputs::Left, Action(sf::Keyboard::Left));
+	playerInputs.map(PlayerInputs::Right, Action(sf::Keyboard::Right));
+	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::LControl));
 }

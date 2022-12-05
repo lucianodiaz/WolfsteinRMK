@@ -1,6 +1,6 @@
 #include "Map.h"
-#include "StaticObject.h"
-
+#include "Actor.h"
+#include "Enemy.h"
 
 Map::Map(World& world) : _world(world)
 {
@@ -48,10 +48,25 @@ void Map::loadLevel(Configuration::Images tex_id)
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Grey;
 			}
+			else if (pixel == LIGHTBROWN)
+			{
+				Actor* obj = new Actor(Configuration::Textures::Barrel, _world);
+				obj->setGridPosition(a, b);
+				_world.add(obj);
+				_sprites.emplace_back(obj);
+			}
 			else if (pixel == LIGHTGREEN)
 			{
-				StaticObject* obj = new StaticObject(Configuration::Textures::GreenLight,_world);
+				Actor* obj = new Actor(Configuration::Textures::GreenLight, _world);
 				obj->setGridPosition(a, b);
+				_world.add(obj);
+				_sprites.emplace_back(obj);
+			}
+			else if (pixel == LIGHTRED)
+			{
+ 				 Actor* obj = new Enemy(Configuration::Textures::Guard, _world);
+				obj->setGridPosition(a, b);
+				obj->_initialPosition = sf::Vector2f(a, b);
 				_world.add(obj);
 				_sprites.emplace_back(obj);
 			}
@@ -74,7 +89,7 @@ Cell Map::getTile(int x, int y) const
 	return _cellMap.at(y * MAP_WIDTH + x);//[y * MAP_WIDTH + x];
 }
 
-std::vector<StaticObject*> Map::getSprites()const
+std::vector<Actor*> Map::getSprites()const
 {
 	return _sprites;
 }

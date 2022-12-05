@@ -3,7 +3,7 @@
 
 Entity::Entity(Configuration::Textures tex_id, World& world):_world(world),_alive(true)
 {
-
+	_alive = true;
 	sf::Texture& texture = Configuration::textures.get(tex_id);
 	_texture = texture;
 	_sprite.setTexture(texture);
@@ -17,11 +17,18 @@ Entity::~Entity()
 void Entity::setGridPosition(float x, float y)
 {
 	_position = sf::Vector2f(x, y);
+	
 }
 
 void Entity::setGridPosition(sf::Vector2f pos)
 {
 	_position = pos;
+}
+
+const sf::Vector2f& Entity::getGridPosition() const
+{
+	return _position;
+	// // O: insert return statement here
 }
 
 const sf::Vector2f& Entity::getPosition() const

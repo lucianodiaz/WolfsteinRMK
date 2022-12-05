@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <list>
 #include <memory>
+#include <list>
 #include "Configuration.h"
 
 class Entity;
