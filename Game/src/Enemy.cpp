@@ -13,11 +13,12 @@ Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
 
     Animation idleAnimation;
     idleAnimation.nameAnimation = (int)states::Idle;
-    idleAnimation.row = 1;
+    idleAnimation.row = 2;
     idleAnimation.duration = .2f;
-    idleAnimation.cantFrame = 0;
-    idleAnimation.startIndex = 1;
+    idleAnimation.cantFrame = 4;
+    idleAnimation.startIndex = 0;
     idleAnimation.loop = true;
+    idleAnimation.repeat = false;
     _animationManager->addAnimation(idleAnimation);
     
 
@@ -53,16 +54,16 @@ void Enemy::update(sf::Time deltaTime)
 
     }
     _animationManager->update(0, deltaTime);
-    _sprite.setTextureRect(_animationManager->uvRect);
+   // _sprite.setTextureRect(_animationManager->uvRect);
 
-    if (getGridPosition().x < _initialPosition.x + 2)
-    {
-        setGridPosition(getGridPosition().x + 1.1 * seconds, getGridPosition().y);
-    }
-    else
-    {
-        setGridPosition(_initialPosition);
-    }
+    //if (getGridPosition().x < _initialPosition.x + 2)
+    //{
+    //    setGridPosition(getGridPosition().x + 1.1 * seconds, getGridPosition().y);
+    //}
+    //else
+    //{
+    //    setGridPosition(_initialPosition);
+    //}
 
 }
 

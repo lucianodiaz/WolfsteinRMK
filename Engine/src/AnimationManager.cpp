@@ -53,6 +53,12 @@ void AnimationManager::update(int row, sf::Time deltaTime)
 					{
 						_currentImage.x = 0;
 					}
+					else
+					{
+						_currentImage.x = _imageCount.x-1;
+						_finishAnimation = true;
+						_totalTime = 0;
+					}
 					for (auto& pair : _onComplete)
 					{
 						if (pair.first == _currentAnimation->nameAnimation)

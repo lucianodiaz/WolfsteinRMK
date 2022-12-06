@@ -14,6 +14,7 @@
 #define LIGHTGREEN sf::Color(200,255,0)
 #define LIGHTBROWN sf::Color(170,130,0)
 
+#define YELLOWKEY sf::color(255,255,130)
 
 //Movable entities
 #define LIGHTRED sf::Color(255,70,0)
