@@ -181,6 +181,7 @@
     <ClCompile Include="Game\src\Pickup\PickupKey.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Animation.h" />
     <ClInclude Include="Engine\include\AnimationManager.h" />
     <ClInclude Include="Game\include\BlockActor.h" />
     <ClInclude Include="Game\include\Enemy.h" />

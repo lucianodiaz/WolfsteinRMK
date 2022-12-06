@@ -1,8 +1,18 @@
 #pragma once
 #include "Actor.h"
+
+class AnimationManager;
+
 class Enemy : public Actor
 {
 public:
+	enum class states
+	{
+		Idle,
+		Walking,
+		Hit,
+		Death
+	};
 	Enemy(Configuration::Textures texId, World& world);
 
 	virtual bool isCollide(const Entity& other) const override;
@@ -14,7 +24,10 @@ public:
 	void receiveDamage(float dmg);
 
 private:
+
+	std::unique_ptr<AnimationManager> _animationManager;
 	sf::Time _timeSinceLastShoot;
+
 	float _health;
 };
 

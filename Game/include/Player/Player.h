@@ -12,6 +12,7 @@ class Player :
 {
 
 public:
+    
     Player(const Player&) = delete;
     Player& operator=(const Player&) = delete;
 
@@ -34,11 +35,18 @@ public:
     void setKey(bool key) { _key = key; };
     bool getKey()const { return _key; };
     
-
+    enum class states
+    {
+        Idle,
+        Pistol,
+        MachineGun
+    };
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 private:
     
+    void startShooting();
+    void stopShooting();
     std::unique_ptr<AnimationManager> _animationManager;
     std::unique_ptr<Camera2d> _camera;
 
@@ -49,7 +57,7 @@ private:
                                        //must be perpendicular to rotation
     float _size_f = 0.375f;// dimensions of player collision box, in tiles
     float _moveSpeed{ 5.0f };
-    float _rotationSpeed{ 3.0f };
+    float _rotationSpeed{ 2.0f };
 
     sf::Vector2f size{ _size_f, _size_f };
 
@@ -64,5 +72,7 @@ private:
     bool _key{};
 
     bool _isShooting{};
+
+    int _ammo;
 };
 

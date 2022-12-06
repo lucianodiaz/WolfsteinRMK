@@ -1,11 +1,27 @@
 
-#include "Enemy.h"
-#include "Collision.h"
 #include <iostream>
+#include "AnimationManager.h"
+#include "Collision.h"
+#include "Enemy.h"
+
+
 
 Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
 {
     _health = 25;
+    _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3), 1.0f);
+
+    Animation idleAnimation;
+    idleAnimation.nameAnimation = (int)states::Idle;
+    idleAnimation.row = 0;
+    idleAnimation.duration = 4.0f;
+    idleAnimation.cantFrame = 4;
+    idleAnimation.startIndex = 0;
+    idleAnimation.loop = true;
+    _animationManager->addAnimation(idleAnimation);
+    
+
+    //_sprite.setTextureRect(_animationManager->uvRect);
 }
 
 bool Enemy::isCollide(const Entity& other) const
@@ -15,8 +31,12 @@ bool Enemy::isCollide(const Entity& other) const
 
 void Enemy::update(sf::Time deltaTime)
 {
+   
 	Actor::update(deltaTime);
     float seconds = deltaTime.asSeconds();
+    _animationManager->playAnimation((int)states::Idle);
+  
+    //_animationManager->update(3, deltaTime);
     _timeSinceLastShoot += deltaTime;
     if (Configuration::player != nullptr)
     {
@@ -30,11 +50,11 @@ void Enemy::update(sf::Time deltaTime)
 			}
             
         }
-       
+
     }
+    _animationManager->update(0, deltaTime);
+    _sprite.setTextureRect(_animationManager->uvRect);
 
-
-    
     if (getGridPosition().x < _initialPosition.x + 2)
     {
         setGridPosition(getGridPosition().x + 1.1 * seconds, getGridPosition().y);
@@ -48,7 +68,8 @@ void Enemy::update(sf::Time deltaTime)
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	Actor::draw(target, states);
+	//Actor::draw(target, states);
+    target.draw(_spriteLines, &_texture);
 }
 
 void Enemy::receiveDamage(float dmg)

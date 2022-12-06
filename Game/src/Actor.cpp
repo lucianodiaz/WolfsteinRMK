@@ -13,8 +13,8 @@ bool Actor::isCollide(const Entity& other) const
 
 void Actor::update(sf::Time deltaTime)
 {
-    _spriteLines.clear();
-    _spriteLines.resize(0);
+    /*_spriteLines.clear();
+    _spriteLines.resize(0);*/
     //Entity::update(deltaTime);
 }
 
