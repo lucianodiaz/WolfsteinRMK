@@ -22,10 +22,10 @@ public:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void receiveDamage(float dmg);
-
+	std::unique_ptr<AnimationManager> _animationManager;
 private:
 
-	std::unique_ptr<AnimationManager> _animationManager;
+	
 	sf::Time _timeSinceLastShoot;
 
 	float _health;

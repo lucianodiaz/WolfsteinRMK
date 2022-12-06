@@ -54,7 +54,7 @@ ActionTarget(Configuration::playerInputs)
 
 	Animation pistolAnimation;
 	
-	pistolAnimation.duration = 0.15f;
+	pistolAnimation.duration = 0.11f;
 	pistolAnimation.nameAnimation = (int)states::Pistol;
 	pistolAnimation.cantFrame = 4;
 	_animationManager->addOnStart(pistolAnimation.nameAnimation, [this]() {startShooting(); });
@@ -108,7 +108,7 @@ void Player::update(sf::Time deltaTime)
 	{
 		 rotation = _rotationSpeed * _rotateDirection * seconds;
 	}
-	//_animationManager->update(0, deltaTime);
+	_animationManager->update(0, deltaTime);
 	_sprite.setTextureRect(_animationManager->uvRect);
 	_camera->Raycasting(rotation);
 }

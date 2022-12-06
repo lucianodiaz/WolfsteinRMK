@@ -3,7 +3,8 @@
 #include "Global.h"
 #include "Map.h"
 #include "World.h"
-
+#include "Enemy.h"
+#include "AnimationManager.h"
 Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& direction, sf::Vector2f size, sf::Vector2f& plane) :
     _world(_world), _position(_position), _direction(direction), size(size), _plane(plane)
 {
@@ -276,11 +277,25 @@ void Camera2d::RaycastingSprite()
 
             if (transformY > 0 && stripe > 0 && stripe < _world.getWidth() && transformY < _ZBuffer[stripe])
             {
-                spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawStartY),
-                    sf::Vector2f((float)texX, (float)(1))));
+                if (dynamic_cast<Enemy*>(sprite))
+                {
+                    auto s = dynamic_cast<Enemy*>(sprite);
 
-                spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawEndY),
-                    sf::Vector2f((float)texX, (float)(texWidth-1-pixelAdjustment))));
+                    spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawStartY),
+                        sf::Vector2f((float)texX+s->_animationManager->uvRect.left, (float)(s->_animationManager->uvRect.top - s->_animationManager->uvRect.height))));
+
+                    spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawEndY),
+                        sf::Vector2f((float)texX + s->_animationManager->uvRect.left, (float)(s->_animationManager->uvRect.top - 1 - pixelAdjustment))));
+                }
+                else
+                {
+                    spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawStartY),
+                        sf::Vector2f((float)texX, (float)(1))));
+
+                    spriteLines.append(sf::Vertex(sf::Vector2f((float)stripe, (float)drawEndY),
+                        sf::Vector2f((float)texX, (float)(texWidth - 1 - pixelAdjustment))));
+                }
+                
 
                 sprite->_spriteLines = spriteLines;
             }

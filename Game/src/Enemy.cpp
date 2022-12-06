@@ -9,19 +9,19 @@
 Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
 {
     _health = 25;
-    _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3), 1.0f);
+    _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3),.3f);
 
     Animation idleAnimation;
     idleAnimation.nameAnimation = (int)states::Idle;
-    idleAnimation.row = 0;
-    idleAnimation.duration = 4.0f;
-    idleAnimation.cantFrame = 4;
-    idleAnimation.startIndex = 0;
+    idleAnimation.row = 1;
+    idleAnimation.duration = .2f;
+    idleAnimation.cantFrame = 0;
+    idleAnimation.startIndex = 1;
     idleAnimation.loop = true;
     _animationManager->addAnimation(idleAnimation);
     
 
-    //_sprite.setTextureRect(_animationManager->uvRect);
+    _sprite.setTextureRect(_animationManager->uvRect);
 }
 
 bool Enemy::isCollide(const Entity& other) const
@@ -68,7 +68,7 @@ void Enemy::update(sf::Time deltaTime)
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	//Actor::draw(target, states);
+	Actor::draw(target, states);
     target.draw(_spriteLines, &_texture);
 }
 
