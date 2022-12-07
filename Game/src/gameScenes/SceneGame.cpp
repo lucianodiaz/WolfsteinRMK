@@ -27,6 +27,7 @@ void SceneGame::onActivate()
 
 void SceneGame::onDeactivate()
 {
+	std::cout << "onDeactive" << std::endl;
 }
 
 void SceneGame::setSwitchToScene(unsigned int id)
@@ -63,6 +64,11 @@ void SceneGame::update(sf::Time deltaTime)
 		//auto pl = new Player(_world);
 		Configuration::player = new Player(_world);
 		_world.add(Configuration::player);
+	}
+
+	if (Configuration::isGameOver())
+	{
+		_sceneStateMachine.switchTo(_switchToState);
 	}
 }
 

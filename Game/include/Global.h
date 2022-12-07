@@ -9,7 +9,7 @@
 #define BLACKRED sf::Color(100,0,0)
 #define YELLOW sf::Color(255,255,0)
 #define CYAN sf::Color(0,255,255)
-
+#define PURPLE sf::Color(255,0,225)
 //Objects Statics
 #define LIGHTGREEN sf::Color(200,255,0)
 #define LIGHTBROWN sf::Color(170,130,0)
@@ -43,5 +43,6 @@ enum Cell
 	Yellow,
 	Cyan,
 	LightBrown,
-	LightRed
+	LightRed,
+	Purple
 };

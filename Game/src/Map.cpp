@@ -49,6 +49,10 @@ void Map::loadLevel(Configuration::Images tex_id)
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Grey;
 			}
+			else if (pixel == PURPLE)
+			{
+				_cellMap.at(b * MAP_WIDTH + a) = Cell::Purple;
+			}
 			else if (pixel == LIGHTBROWN)
 			{
 				Actor* obj = new BlockActor(Configuration::Textures::Barrel, _world);

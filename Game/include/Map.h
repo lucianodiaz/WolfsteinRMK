@@ -38,8 +38,9 @@ public:
         BrickCross = 17,
         Mod = 18,//cyan 
         Flag = 19,//blackRed
-        MooStone,//yellow
-        Refined,//grey
+        MooStone=20,//yellow
+        Refined=21,//grey
+        LastDoor=49,//Purple
     };
     const std::unordered_map<char, WallTexture> wallTypes{
     {Cell::Blue, WallTexture::BlueStone},
@@ -50,6 +51,7 @@ public:
     {Cell::Cyan, WallTexture::Mod},
     {Cell::Yellow, WallTexture::MooStone},
     {Cell::Grey, WallTexture::Refined},
+    {Cell::Purple, WallTexture::LastDoor}
     };
 private:
 

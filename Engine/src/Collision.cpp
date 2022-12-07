@@ -68,6 +68,10 @@ bool Collision::canMove(sf::Vector2f pos, sf::Vector2f size, Map& map)
 	for (int y = upper_left.y; y <= lower_right.y; ++y) {
 		for (int x = upper_left.x; x <= lower_right.x; ++x) {
 			if (map.getTile(x, y) != Cell::Empty) {
+				if (map.getTile(x, y) == Cell::Purple)
+				{
+					Configuration::trySetGameOver();
+				}
 				return false;
 			}
 		}

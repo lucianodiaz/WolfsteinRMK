@@ -1,4 +1,5 @@
 #include "Configuration.h"
+#include "Player/Player.h"
 
 ResourceManager<sf::Font, int> Configuration::fonts;
 ResourceManager<sf::Music, int>Configuration::musics;
@@ -11,6 +12,7 @@ ActionMap<int> Configuration::playerInputs;
 
 int Configuration::_score;
 int Configuration::lives;
+bool Configuration::_gameOver;
 
 sf::Vector2f Configuration::_initialPosition;
 
@@ -41,6 +43,19 @@ void Configuration::setInitialPosition(sf::Vector2f pos)
 }
 void Configuration::draw(sf::RenderTarget& target)
 {
+}
+
+void Configuration::trySetGameOver()
+{
+	if (player != nullptr && player->getKey())
+	{
+		_gameOver = true;
+	}
+}
+
+bool Configuration::isGameOver()
+{
+	return _gameOver;
 }
 
 void Configuration::initTextures()

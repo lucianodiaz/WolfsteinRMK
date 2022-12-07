@@ -80,8 +80,12 @@ public:
 
 	static void draw(sf::RenderTarget& target);
 
+	static void trySetGameOver();
+
+	static bool isGameOver();
 private:
 
+	static bool _gameOver;
 	static int _score;
 
 	static sf::Vector2f _initialPosition;

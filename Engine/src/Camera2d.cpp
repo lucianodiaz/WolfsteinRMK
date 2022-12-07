@@ -8,7 +8,7 @@
 Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& direction, sf::Vector2f size, sf::Vector2f& plane) :
     _world(_world), _position(_position), _direction(direction), size(size), _plane(plane)
 {
-    _lines = sf::VertexArray(sf::Lines, _world.getWidth());
+    _lines = sf::VertexArray(sf::Lines, 18*_world.getWidth());
     
 
     _state = &Configuration::textures.get(Configuration::Textures::Walls);
@@ -140,8 +140,10 @@ void Camera2d::Raycasting(float rotation)
 
         // get position of the wall texture in the full texture
         int wallTextureNum = (int)_world.getMap().wallTypes.find(tile)->second;
+        //the eleven it's a magic number i don't know why textures don't drawed well so a add this number offset
+        //to fix that and for now works well
         sf::Vector2i texture_coords(
-            wallTextureNum * texture_wall_size % texture_size,
+            wallTextureNum * texture_wall_size % texture_size-1,
             wallTextureNum * texture_wall_size / texture_size * texture_wall_size
         );
 
@@ -444,4 +446,12 @@ void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
         if (sprite->isAlive())sprite->draw(target, states);
     }
     
+}
+
+void Camera2d::restart()
+{
+    _ZBuffer.clear();
+    _spriteOrder.clear();
+    _spriteDistance.clear();
+    _lines.resize(0);
 }

@@ -11,6 +11,7 @@ public:
 	void Raycasting(float rotation);
 	void RaycastingSprite();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void restart();
 protected:
 	
 	//1D Zbuffer

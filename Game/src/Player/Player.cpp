@@ -74,6 +74,7 @@ ActionTarget(Configuration::playerInputs)
 
 	_animationManager->playAnimation((int)states::Idle);
 	_ammo = 30;
+	_key = true;
 }
 
 bool Player::isCollide(const Entity& other) const
