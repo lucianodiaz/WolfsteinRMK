@@ -24,7 +24,7 @@ Game::Game(int x, int y) : _window(std::make_unique<Window>(x,y,"Wolfenstein3d R
 	splashScreen->setSwitchToScene(menuSceneID);
 	menuScene->setSwitchToScene(gameSceneID);
 	gameScene->setSwitchToScene(menuSceneID);
-	sceneStateMachine.switchTo(gameSceneID);
+	sceneStateMachine.switchTo(splashScreenID);
 
 	
 }
