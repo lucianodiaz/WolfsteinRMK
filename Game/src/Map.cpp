@@ -2,14 +2,23 @@
 #include "Actor.h"
 #include "Enemy.h"
 #include "BlockActor.h"
+#include "Pickup/PickupKey.h"
 
 Map::Map(World& world) : _world(world)
 {
 }
 
+void Map::clear()
+{
+	_sprites.clear();
+}
+
 void Map::loadLevel(Configuration::Images tex_id)
 {
 	sf::Image mapSketch = Configuration::images.get(tex_id);
+
+	_cellMap.clear();
+	_sprites.clear();
 
 	_cellMap = std::vector(MAP_WIDTH * MAP_HEIGHT,Cell::Empty);
 	for (int a = 0; a < MAP_WIDTH; a++)
@@ -53,6 +62,13 @@ void Map::loadLevel(Configuration::Images tex_id)
 			{
 				_cellMap.at(b * MAP_WIDTH + a) = Cell::Purple;
 			}
+			else if (pixel == YELLOWKEY)
+			{
+				Actor* obj = new PickupKey(Configuration::Textures::Key, _world);
+				obj->setGridPosition(a, b);
+				_world.add(obj);
+				_sprites.emplace_back(obj);
+			}
 			else if (pixel == LIGHTBROWN)
 			{
 				Actor* obj = new BlockActor(Configuration::Textures::Barrel, _world);
@@ -69,7 +85,7 @@ void Map::loadLevel(Configuration::Images tex_id)
 			}
 			else if (pixel == LIGHTRED)
 			{
- 				 Actor* obj = new Enemy(Configuration::Textures::Guard, _world);
+ 				Actor* obj = new Enemy(Configuration::Textures::Guard, _world);
 				obj->setGridPosition(a, b);
 				obj->_initialPosition = sf::Vector2f(a, b);
 				_world.add(obj);

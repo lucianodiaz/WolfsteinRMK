@@ -1,10 +1,10 @@
 #pragma once
-#include "Scene/Scene.h"
 #include <SFML/System/NonCopyable.hpp>
 #include <Scene/SceneStateMachine.h>
+#include "Scene/Scene.h"
+#include "GUI/Gui.h"
 
 class World;
-
 class SceneGame :
     public Scene , private sf::NonCopyable
 {
@@ -23,8 +23,12 @@ public:
     void update(sf::Time deltaTime) override;
     void draw(Window& window) override;
 
+    
 private:
+    void initGUI();
     unsigned int _switchToState;
+    Frame _objective1;
+    Frame _objective2;
     World& _world;
     Window& _window;
     SceneStateMachine& _sceneStateMachine;

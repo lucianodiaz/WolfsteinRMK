@@ -34,6 +34,8 @@ public:
 
     void setKey(bool key) { _key = key; };
     bool getKey()const { return _key; };
+
+    void restart();
     
     enum class states
     {

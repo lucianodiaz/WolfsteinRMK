@@ -51,11 +51,13 @@ void World::clear()
 {
     for (Entity* entity : _entities)
     {
+        if(!dynamic_cast<Player*>(entity))
         delete entity;
     }
     _entities.clear();
     for (Entity* entity : _entitiesTmp)
     {
+        if (!dynamic_cast<Player*>(entity))
         delete entity;
     }
     _entitiesTmp.clear();

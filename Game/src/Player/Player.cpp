@@ -74,7 +74,7 @@ ActionTarget(Configuration::playerInputs)
 
 	_animationManager->playAnimation((int)states::Idle);
 	_ammo = 30;
-	_key = true;
+	_key = false;
 }
 
 bool Player::isCollide(const Entity& other) const
@@ -150,6 +150,11 @@ void Player::getHealth(float heal)
 void Player::onDestroy()
 {
 	Entity::onDestroy();
+}
+
+void Player::restart()
+{
+	_camera->restart();
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const

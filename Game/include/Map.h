@@ -12,6 +12,8 @@ public:
 
 	Map(World& world);
 
+    void clear();
+
 	void loadLevel(Configuration::Images tex_id);
 
     Cell getTile(int x, int y)const;

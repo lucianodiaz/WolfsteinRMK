@@ -11,15 +11,15 @@ Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
     _health = 25;
     _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3),.3f);
 
-    Animation idleAnimation;
-    idleAnimation.nameAnimation = (int)states::Idle;
-    idleAnimation.row = 2;
-    idleAnimation.duration = .2f;
-    idleAnimation.cantFrame = 4;
-    idleAnimation.startIndex = 0;
-    idleAnimation.loop = true;
-    idleAnimation.repeat = false;
-    _animationManager->addAnimation(idleAnimation);
+    Animation deathAnimation;
+    deathAnimation.nameAnimation = (int)states::Idle;
+    deathAnimation.row = 2;
+    deathAnimation.duration = .2f;
+    deathAnimation.cantFrame = 4;
+    deathAnimation.startIndex = 0;
+    deathAnimation.loop = true;
+    deathAnimation.repeat = false;
+    _animationManager->addAnimation(deathAnimation);
     
 
     _sprite.setTextureRect(_animationManager->uvRect);
