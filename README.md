@@ -3,6 +3,8 @@
 WolfsteinRMK is a remake of the game wolfestein 3d using c++ and SFML.
 I made a raycasting system to draw walls and animated sprites.
 I follow dev blog https://lodev.org/cgtutor/raycasting.html to understand the structure and implementation also I follow the structure to make a "engine" Following SFML blueprint book.
+![Mi video](https://user-images.githubusercontent.com/30010210/207696834-95f8c645-83fa-4d78-9f64-5dde77b0eedc.gif)
+![Mi video1](https://user-images.githubusercontent.com/30010210/207697062-6fe7960e-9a02-44d4-aa54-504339535f6b.gif)
 
 ## Installation
 
