@@ -1,5 +1,8 @@
 # WolfsteinRMK (WIP)
+# DOWNLOAD
+https://github.com/lucianodiaz/WolfsteinRMK/releases/download/v0.0.1/WolfesteinRMK.zip
 
+# Overview
 WolfsteinRMK is a remake of the game wolfestein 3d using c++ and SFML.
 I made a raycasting system to draw walls and animated sprites.
 I follow dev blog https://lodev.org/cgtutor/raycasting.html to understand the structure and implementation also I follow the structure to make a "engine" Following SFML blueprint book.
