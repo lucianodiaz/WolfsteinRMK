@@ -36,6 +36,8 @@ public:
     bool getKey()const { return _key; };
 
     void restart();
+
+    Camera2d& getCamera()const;
     
     enum class states
     {

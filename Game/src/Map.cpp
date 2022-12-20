@@ -11,6 +11,7 @@ Map::Map(World& world) : _world(world)
 void Map::clear()
 {
 	_sprites.clear();
+	_cellMap.clear();
 }
 
 void Map::loadLevel(Configuration::Images tex_id)

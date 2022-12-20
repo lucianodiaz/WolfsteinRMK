@@ -51,13 +51,14 @@ void World::clear()
 {
     for (Entity* entity : _entities)
     {
-        if(!dynamic_cast<Player*>(entity))
+        //if(!dynamic_cast<Player*>(entity))
         delete entity;
     }
+    Configuration::player = nullptr;
     _entities.clear();
     for (Entity* entity : _entitiesTmp)
     {
-        if (!dynamic_cast<Player*>(entity))
+        //if (!dynamic_cast<Player*>(entity))
         delete entity;
     }
     _entitiesTmp.clear();
@@ -89,6 +90,4 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         target.draw(*entity, states);
     }
-
-   
 }

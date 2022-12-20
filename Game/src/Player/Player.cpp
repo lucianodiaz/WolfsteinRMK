@@ -157,6 +157,12 @@ void Player::restart()
 	_camera->restart();
 }
 
+Camera2d& Player::getCamera() const
+{
+	// // O: insert return statement here
+	return *_camera;
+}
+
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	_camera->draw(target, states);

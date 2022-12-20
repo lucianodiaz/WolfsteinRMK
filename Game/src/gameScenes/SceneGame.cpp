@@ -1,9 +1,10 @@
-#include "gameScenes/SceneGame.h"
-#include "Configuration.h"
-#include "World.h"
-#include "Player/Player.h"
 #include "Actor.h"
+#include "Camera2d.h"
+#include "Configuration.h"
 #include "Map.h"
+#include "World.h"
+#include "gameScenes/SceneGame.h"
+#include "Player/Player.h"
 
 SceneGame::SceneGame(SceneStateMachine& ssm, Window& window, World& world) :
 	_world(world), _window(window), _sceneStateMachine(ssm),_switchToState(0),_objective2(window.getRenderWindow()),
@@ -35,8 +36,9 @@ void SceneGame::onActivate()
 
 void SceneGame::onDeactivate()
 {
-	std::cout << "onDeactive" << std::endl;
+	std::cout << "onDeactivate:: SCENEGAME" << std::endl;
 	Configuration::musics.get(Configuration::Music::Level1).stop();
+	Configuration::player->getCamera().restart();
 	_world.clear();
 	_world.getMap().clear();
 }
@@ -53,13 +55,13 @@ void SceneGame::processInput()
 	{
 		if (evt.type == sf::Event::Closed)
 			_window.close();
-		//if (evt.type == sf::Event::KeyPressed)
-		//{
-		//	if (evt.key.code == sf::Keyboard::Escape)
-		//	{
-		//		//_sceneStateMachine.switchTo(_switchToState);
-		//	}
-		//}
+		if (evt.type == sf::Event::KeyPressed)
+		{
+			if (evt.key.code == sf::Keyboard::Escape)
+			{
+				_sceneStateMachine.switchTo(_switchToState);
+			}
+		}
 		if(Configuration::player!= nullptr)
 		Configuration::player->processEvent(evt);
 	}

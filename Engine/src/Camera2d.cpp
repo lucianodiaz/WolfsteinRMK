@@ -27,10 +27,11 @@ Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& directi
 
 void Camera2d::Raycasting(float rotation)
 {
-    RaycastingSprite();
+   
     _direction = rotateVec(_direction, rotation);
     _plane = rotateVec(_plane, rotation);
     //Start Raycasting Sprite
+    //RaycastingSprite();
     _lines.resize(0);
 
     int screenWidth = _world.getWidth();
@@ -80,7 +81,7 @@ void Camera2d::Raycasting(float rotation)
 
         float perpWallDist = 1.0f; // wall distance, projected on camera direction
         int wallHeight; // height of wall to draw on the screen at each distance
-        int ceilingPixel = 0; // position of ceiling pixel on the screen
+        int ceilingPixel = 1; // position of ceiling pixel on the screen
         int groundPixel = screenHeight; // position of ground pixel on the screen
 
         // colors for floor tiles
@@ -305,110 +306,6 @@ void Camera2d::RaycastingSprite()
     }
 
     spriteLines.clear();
-   /*
-   for (int i = 0; i < _world.getMap().getSprites().size(); i++)
-    {
-        Entity* entity = _world.getMap().getSprites().at(i);
-        _spriteOrder.at(i) = i;
-        _spriteDistance.at(i) = ((_position.x - entity->getGridPosition().x) * (_position.x - entity->getGridPosition().x) +
-                                 (_position.y - entity->getGridPosition().y) * (_position.y - entity->getGridPosition().y));
-    }
-
-    sortSprites(_spriteOrder, _spriteDistance, _world.getMap().getSprites().size());
-    int width = _world.getWidth();
-    //after sorting the sprites, do the projection and draw them
-    for (int i = 0; i < _world.getMap().getSprites().size(); i++)
-    {
-        //translate sprite position to relative to camera
-        double spriteX = _world.getMap().getSprites().at(i)->getGridPosition().x - _position.x;
-        double spriteY = _world.getMap().getSprites().at(i)->getGridPosition().y - _position.y;
-
-        double invDet = 1.0 / (_plane.x * _direction.y - _direction.x * _plane.y);
-
-        double transformX = invDet * (_direction.y * spriteX - _direction.x * spriteY);
-        double transformY = invDet * (-_plane.y * spriteX + _plane.x * spriteY); //this is actually the depth the screen, that what Z is in 3D
-
-
-        if (transformY < 0) continue;
-
-        int spriteScreenX = int((width / 2) * (1 + transformX / transformY));
-
-        //Calculate heighht of the sprite on screen
-        int spriteHeight = abs(int(_world.getHeight() / (transformY)));
-
-        int drawStartY = -spriteHeight / 2 + _world.getHeight() / 2;
-        if (drawStartY < 0) drawStartY = 0;
-
-        int drawEndY = spriteHeight / 2 + _world.getHeight() / 2;
-        if (drawEndY >= _world.getHeight()) drawEndY = _world.getHeight() - 1;
-
-        //calculate width of the sprite
-        int spriteWidth = abs(int(_world.getHeight() / (transformY)));
-
-        int drawStartX = -spriteWidth / 2 + spriteScreenX;
-        if (drawStartX < 0) drawStartX = 0;
-        int drawEndX = spriteWidth / 2 + spriteScreenX;
-        if (drawEndX >=width) drawEndX = width - 1;
-
-        int drawWidth = drawEndX - drawStartX;
-        int drawOrigStartX = drawStartX;
-
-        int spriteLeft = 0;
-        int spriteRight = texWidth;
-        int spriteTop = 0;
-        int spriteBottom = texHeigth;
-
-        //loop through every vertical sprite of the sprite on screen
-
-        for (int stripe = drawStartX; stripe < drawEndX; stripe++)
-        {
-            if (stripe < 0)
-            {
-                drawStartX += 1;
-            }
-            if (transformY > this->_ZBuffer[stripe]) 
-            {
-                drawStartX += 1;
-            }
-        }
-
-        int newWidth = drawEndX - drawStartX;
-        float d = (float)drawWidth / (float)newWidth;
-
-        spriteLeft = texWidth - (float)texWidth / d;
-
-        for (int stripe = drawEndX; stripe > drawStartX; --stripe)
-        {
-            if (stripe > width)
-            {
-                drawEndX -= 1;
-            }
-            if (transformY > _ZBuffer[stripe])
-            {
-                drawEndX -= 1;
-            }
-        }
-
-        newWidth = drawEndX - drawOrigStartX;
-        d = (float)drawWidth / (float)newWidth;
-
-        spriteRight = (float)texWidth / d;
-
-        //_world.getMap().getSprites().at(i)->spriteQuad[0]
-        _world.getMap().getSprites().at(i)->spriteQuad[0].position = sf::Vector2f(drawStartX, drawStartY);
-        _world.getMap().getSprites().at(i)->spriteQuad[0].texCoords = sf::Vector2f(spriteLeft, spriteTop);
-        _world.getMap().getSprites().at(i)->spriteQuad[1].position = sf::Vector2f(drawEndX, drawStartY);
-        _world.getMap().getSprites().at(i)->spriteQuad[1].texCoords = sf::Vector2f(spriteRight, spriteTop);
- 
-        _world.getMap().getSprites().at(i)->spriteQuad[2].position = sf::Vector2f(drawEndX, drawEndY);
-        _world.getMap().getSprites().at(i)->spriteQuad[2].texCoords = sf::Vector2f(spriteRight, spriteBottom);
-  
-        _world.getMap().getSprites().at(i)->spriteQuad[3].position = sf::Vector2f(drawStartX, drawEndY);
-        _world.getMap().getSprites().at(i)->spriteQuad[3].texCoords = sf::Vector2f(spriteLeft, spriteBottom);
-
-    }
-   */ 
-    
 }
 
 void Camera2d::sortSprites(std::vector<int>* order, std::vector<double>* dist, int amount)
