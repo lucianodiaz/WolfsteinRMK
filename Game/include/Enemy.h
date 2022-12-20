@@ -6,7 +6,7 @@ class AnimationManager;
 class Enemy : public Actor
 {
 public:
-	enum class states
+	enum class States
 	{
 		Idle,
 		Walking,
@@ -25,7 +25,8 @@ public:
 	std::unique_ptr<AnimationManager> _animationManager;
 private:
 
-	
+	void animationSetup();
+	States _currentState;
 	sf::Time _timeSinceLastShoot;
 
 	float _health;

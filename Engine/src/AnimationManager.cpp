@@ -1,12 +1,12 @@
 #include "AnimationManager.h"
+#include <iostream>
 
-AnimationManager::AnimationManager(sf::Texture* texture, sf::Vector2u imgCount, float switchTime)
+AnimationManager::AnimationManager(sf::Texture* texture, sf::Vector2u imgCount)
 {
 	_currentAnimation = nullptr;
 	_imageCount = imgCount;
-	_switchTime = switchTime;
 	_totalTime = 0.0f;
-	_currentImage.x = 0;
+	//_currentImage.x = 0;
 
 	uvRect.width = texture->getSize().x / float(_imageCount.x);
 	uvRect.height = texture->getSize().y / float(_imageCount.y);
@@ -18,12 +18,14 @@ AnimationManager::~AnimationManager()
 {
 }
 
-void AnimationManager::update(int row, sf::Time deltaTime)
+void AnimationManager::update(sf::Time deltaTime)
 {
 	if (_currentAnimation != nullptr) 
 	{
 		_currentImage.y = _currentAnimation->row;//row
 		_totalTime += deltaTime.asSeconds();
+		//_currentImage.x = _currentAnimation->startIndex;
+		/*_imageCount.x = _currentAnimation->cantFrame;*/
 
 		if (!_finishAnimation)
 		{
@@ -41,8 +43,8 @@ void AnimationManager::update(int row, sf::Time deltaTime)
 				}
 				
 				_totalTime -= _currentAnimation->duration;
-				_currentImage.x++;
-				if (_currentImage.x >= _imageCount.x)
+
+				if (_currentImage.x+1 >= _currentAnimation->cantFrame)
 				{
 					if (!_currentAnimation->loop)
 					{
@@ -51,11 +53,11 @@ void AnimationManager::update(int row, sf::Time deltaTime)
 
 					if (_currentAnimation->repeat)
 					{
-						_currentImage.x = 0;
+						_currentImage.x = _currentAnimation->startIndex;
 					}
 					else
 					{
-						_currentImage.x = _imageCount.x-1;
+						_currentImage.x = _currentAnimation->cantFrame-1;
 						_finishAnimation = true;
 						_totalTime = 0;
 					}
@@ -68,9 +70,14 @@ void AnimationManager::update(int row, sf::Time deltaTime)
 					}
 
 				}
+				else
+				{
+					_currentImage.x++;
+				}
 			}
 			uvRect.left = _currentImage.x * uvRect.width;
 			uvRect.top = _currentImage.y * uvRect.height;
+			//_totalTime = 0;
 		}
 		else
 		{
@@ -93,6 +100,7 @@ void AnimationManager::addOnComplete(int nameAnimation, const FuncType& callback
 void AnimationManager::addAnimation(Animation& animation)
 {
 	_animations.emplace_back(animation);
+	
 }
 
 void AnimationManager::playAnimation(int animationName)

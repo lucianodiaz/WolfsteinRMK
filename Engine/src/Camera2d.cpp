@@ -12,7 +12,7 @@ Camera2d::Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& directi
     _lines = sf::VertexArray(sf::Lines, 18*_world.getWidth());
     
 
-    _state = &Configuration::textures.get(Configuration::Textures::Walls);
+    _currentState = &Configuration::textures.get(Configuration::Textures::Walls);
 
     _direction = rotateVec(direction, 5.0f);
     _plane = rotateVec(_plane,5.0f);
@@ -346,7 +346,7 @@ sf::Vector2f Camera2d::rotateVec(sf::Vector2f vec, float value) const
 void Camera2d::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 
-    target.draw(_lines, _state);
+    target.draw(_lines, _currentState);
    
     for (auto sprite : _world.getMap().getSprites())
     {

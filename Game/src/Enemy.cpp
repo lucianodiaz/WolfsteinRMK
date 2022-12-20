@@ -9,19 +9,11 @@
 Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
 {
     _health = 25;
-    _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3),.3f);
+    _animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 3));
+    _currentState = States::Idle;
 
-    Animation deathAnimation;
-    deathAnimation.nameAnimation = (int)states::Idle;
-    deathAnimation.row = 2;
-    deathAnimation.duration = .2f;
-    deathAnimation.cantFrame = 4;
-    deathAnimation.startIndex = 0;
-    deathAnimation.loop = true;
-    deathAnimation.repeat = false;
-    _animationManager->addAnimation(deathAnimation);
-    _animationManager->addOnComplete(deathAnimation.nameAnimation, [this]() {_alive = false; });
-
+    animationSetup();
+    _animationManager->playAnimation((int)_currentState);
     _sprite.setTextureRect(_animationManager->uvRect);
 }
 
@@ -35,9 +27,8 @@ void Enemy::update(sf::Time deltaTime)
    
 	Actor::update(deltaTime);
     float seconds = deltaTime.asSeconds();
-    _animationManager->playAnimation((int)states::Idle);
+    _animationManager->playAnimation((int)_currentState);
   
-    //_animationManager->update(3, deltaTime);
     _timeSinceLastShoot += deltaTime;
     if (Configuration::player != nullptr)
     {
@@ -53,17 +44,7 @@ void Enemy::update(sf::Time deltaTime)
         }
 
     }
-    _animationManager->update(0, deltaTime);
-   // _sprite.setTextureRect(_animationManager->uvRect);
-
-    //if (getGridPosition().x < _initialPosition.x + 2)
-    //{
-    //    setGridPosition(getGridPosition().x + 1.1 * seconds, getGridPosition().y);
-    //}
-    //else
-    //{
-    //    setGridPosition(_initialPosition);
-    //}
+    _animationManager->update(deltaTime);
 
 }
 
@@ -76,4 +57,53 @@ void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Enemy::receiveDamage(float dmg)
 {
     _health = std::clamp(_health - dmg,0.0f,100.f);
+}
+
+void Enemy::animationSetup()
+{
+    Animation idleAnimation;
+    idleAnimation.nameAnimation = (int)States::Idle;
+    idleAnimation.row = 3;
+    idleAnimation.duration = .9f;
+    idleAnimation.cantFrame = 1;
+    idleAnimation.startIndex = 1;
+    idleAnimation.loop = false;
+    idleAnimation.repeat = true;
+    _animationManager->addAnimation(idleAnimation);
+    _animationManager->addOnComplete(idleAnimation.nameAnimation, [this]() {/*_alive = false;*/_currentState = States::Hit; });
+
+    Animation walkAnimation;
+    walkAnimation.nameAnimation = (int)States::Walking;
+    walkAnimation.row = 1;
+    walkAnimation.duration = .2f;
+    walkAnimation.cantFrame = 4;
+    walkAnimation.startIndex = 0;
+    walkAnimation.loop = true;
+    walkAnimation.repeat = true;
+    _animationManager->addAnimation(walkAnimation);
+    _animationManager->addOnComplete(walkAnimation.nameAnimation, [this]() {/*_alive = false;*/ });
+
+    Animation hitAnimation;
+    hitAnimation.nameAnimation = (int)States::Hit;
+    hitAnimation.row = 3;
+    hitAnimation.duration =.2f;
+    hitAnimation.cantFrame = 1;
+    hitAnimation.startIndex = 0;
+    hitAnimation.loop = true;
+    hitAnimation.repeat = true;
+    _animationManager->addAnimation(hitAnimation);
+    _animationManager->addOnComplete(hitAnimation.nameAnimation, [this]() {/*_alive = false;*/_currentState = States::Idle; });
+
+    Animation deathAnimation;
+    deathAnimation.nameAnimation = (int)States::Death;
+    deathAnimation.row = 2;
+    deathAnimation.duration = .2f;
+    deathAnimation.cantFrame = 4;
+    deathAnimation.startIndex = 0;
+    deathAnimation.loop = false;
+    deathAnimation.repeat = false;
+    _animationManager->addAnimation(deathAnimation);
+    _animationManager->addOnComplete(deathAnimation.nameAnimation, [this]() {/*_alive = false;*/ _currentState = States::Idle;});
+
+
 }

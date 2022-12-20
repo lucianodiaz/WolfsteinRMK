@@ -42,7 +42,7 @@ ActionTarget(Configuration::playerInputs)
 	_health = 100;
 	_camera = std::make_unique<Camera2d>(_world, _position, _direction, sf::Vector2f(_size_f, _size_f), _plane);
 
-	_animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 2), 0.1f);
+	_animationManager = std::make_unique<AnimationManager>(&_texture, sf::Vector2u(4, 2));
 
 	Animation idleAnimation;
 	idleAnimation.nameAnimation = (int)states::Idle;
@@ -109,7 +109,7 @@ void Player::update(sf::Time deltaTime)
 	{
 		 rotation = _rotationSpeed * _rotateDirection * seconds;
 	}
-	_animationManager->update(0, deltaTime);
+	_animationManager->update(deltaTime);
 	_sprite.setTextureRect(_animationManager->uvRect);
 	_camera->Raycasting(rotation);
 }

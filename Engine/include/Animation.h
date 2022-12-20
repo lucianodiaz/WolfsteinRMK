@@ -7,7 +7,7 @@ struct Animation
 {
 	//Name Index this is a enum but this recive a int (enum it's just mantein clean animation name)
 	int nameAnimation{};
-	//Where is in the image height
+	//Where is in the image height start in 1
 	int row{};
 	//how many frames does it have
 	int cantFrame{};

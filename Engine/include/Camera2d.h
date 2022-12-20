@@ -35,7 +35,7 @@ protected:
 	const float cameraHeight = 0.66f;//Heigth of player camera(1.0 is ceiling, 0.0 is floor)
 	sf::VertexArray _lines;
 	/*sf::VertexArray _spriteLines;*/
-	sf::RenderStates _state;
+	sf::RenderStates _currentState;
 
 	World& _world;
 };

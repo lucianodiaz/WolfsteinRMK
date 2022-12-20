@@ -9,10 +9,10 @@ class AnimationManager
 public:
 	using FuncType = std::function<void()>;
 
-	AnimationManager(sf::Texture* texture, sf::Vector2u imgCount, float switchTime);
+	AnimationManager(sf::Texture* texture, sf::Vector2u imgCount);
 	~AnimationManager();
 
-	void update(int row, sf::Time deltaTime);
+	void update(sf::Time deltaTime);
 
 public:
 	void addOnStart(int nameAnimation, const FuncType& callback);
