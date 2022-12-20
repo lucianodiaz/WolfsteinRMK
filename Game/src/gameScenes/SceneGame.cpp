@@ -81,7 +81,9 @@ void SceneGame::update(sf::Time deltaTime)
 
 	if (Configuration::isGameOver())
 	{
+		Configuration::reset();
 		_sceneStateMachine.switchTo(_switchToState);
+
 	}
 }
 

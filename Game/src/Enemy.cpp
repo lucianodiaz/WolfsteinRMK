@@ -20,7 +20,7 @@ Enemy::Enemy(Configuration::Textures texId, World& world) : Actor(texId,world)
     deathAnimation.loop = true;
     deathAnimation.repeat = false;
     _animationManager->addAnimation(deathAnimation);
-    
+    _animationManager->addOnComplete(deathAnimation.nameAnimation, [this]() {_alive = false; });
 
     _sprite.setTextureRect(_animationManager->uvRect);
 }

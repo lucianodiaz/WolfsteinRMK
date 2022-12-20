@@ -2,7 +2,7 @@
 
 Actor::Actor(Configuration::Textures texId, World& world) : Entity(texId , world)
 {
-    _spriteLines = sf::VertexArray(sf::Lines, 18 * _world.getWidth());
+    _spriteLines = sf::VertexArray(sf::Lines,_world.getWidth());
     _collide = false;
 }
 
@@ -16,6 +16,7 @@ void Actor::update(sf::Time deltaTime)
     /*_spriteLines.clear();
     _spriteLines.resize(0);*/
     //Entity::update(deltaTime);
+    //_spriteLines.resize(0);
 }
 
 void Actor::draw(sf::RenderTarget& target, sf::RenderStates states) const

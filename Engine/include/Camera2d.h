@@ -9,6 +9,7 @@ class Camera2d : public sf::Drawable, private sf::NonCopyable
 public:
 	Camera2d(World& _world, sf::Vector2f& _position, sf::Vector2f& _direction,sf::Vector2f size,sf::Vector2f& plane);
 	void Raycasting(float rotation);
+	void RaycastinWalls();
 	void RaycastingSprite();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	void restart();

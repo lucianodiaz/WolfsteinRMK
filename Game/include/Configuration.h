@@ -83,6 +83,8 @@ public:
 	static void trySetGameOver();
 
 	static bool isGameOver();
+
+	static void reset();
 private:
 
 	static bool _gameOver;

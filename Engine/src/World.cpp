@@ -88,6 +88,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     for (Entity* entity : _entities)
     {
+        if(dynamic_cast<Player*>(entity))
         target.draw(*entity, states);
     }
 }

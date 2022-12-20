@@ -58,6 +58,11 @@ bool Configuration::isGameOver()
 	return _gameOver;
 }
 
+void Configuration::reset()
+{
+	_gameOver = false;
+}
+
 void Configuration::initTextures()
 {
 	textures.load(Textures::PlayerTexture, "assets/player/player.png");
