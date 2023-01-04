@@ -70,7 +70,7 @@ void Enemy::animationSetup()
     idleAnimation.loop = false;
     idleAnimation.repeat = true;
     _animationManager->addAnimation(idleAnimation);
-    _animationManager->addOnComplete(idleAnimation.nameAnimation, [this]() {/*_alive = false;*/_currentState = States::Hit; });
+    _animationManager->addOnComplete(idleAnimation.nameAnimation, [this]() {/*_alive = false;*/});
 
     Animation walkAnimation;
     walkAnimation.nameAnimation = (int)States::Walking;
@@ -103,7 +103,5 @@ void Enemy::animationSetup()
     deathAnimation.loop = false;
     deathAnimation.repeat = false;
     _animationManager->addAnimation(deathAnimation);
-    _animationManager->addOnComplete(deathAnimation.nameAnimation, [this]() {/*_alive = false;*/ _currentState = States::Idle;});
-
-
+    _animationManager->addOnComplete(deathAnimation.nameAnimation, [this]() {/*_alive = false;*/});
 }
